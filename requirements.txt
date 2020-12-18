@@ -1,0 +1,11 @@
+Django
+psycopg2-binary
+pandapower
+matplotlib
+sklearn
+tqdm
+IPython
+plotly
+django-cors-headers
+djangorestframework
+

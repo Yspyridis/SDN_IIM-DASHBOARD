@@ -1,0 +1,32 @@
+sudo pacman -S postgresql
+
+sudo mkdir /var/lib/postgres/data
+
+sudo chown postgres /var/lib/postgres/data
+
+sudo -i -u postgres
+initdb  -D '/var/lib/postgres/data'
+
+exit
+
+systemctl start postgresql.service
+systemctl enable postgresql.service 
+
+###################################
+createuser -P iim
+provide '1234' as a password
+$ createdb -O iim iimdb
+
+* to remove DB use (in case of migration problem): dropdb iimdb
+###################################
+
+
+or
+
+sudo pacman -S postgresql postgis
+
+sudo su postgres -l # or sudo -u postgres -i
+initdb --locale $LANG -E UTF8 -D '/var/lib/postgres/data/'
+exit
+
+sudo systemctl enable --now postgresql.service

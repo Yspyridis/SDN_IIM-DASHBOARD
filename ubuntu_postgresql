@@ -1,0 +1,11 @@
+sudo apt-get install postgresql
+
+sudo su - postgres
+createuser -P iim
+
+createdb -O iim iimdb2
+
+
+dropdb iimdb2
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete

@@ -1,5 +1,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD/issues)
-[![GitHub stars](https://img.shields.io/github/stars/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD/stargazers)
+<!-- [![GitHub stars](https://img.shields.io/github/stars/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD/stargazers) -->
+<!-- ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Django) -->
 [![GitHub license](https://img.shields.io/github/license/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD)
 
 

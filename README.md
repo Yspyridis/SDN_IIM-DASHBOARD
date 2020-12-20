@@ -1,3 +1,8 @@
+[![GitHub issues](https://img.shields.io/github/issues/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD/issues)
+[![GitHub stars](https://img.shields.io/github/stars/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD)
+
+
 # IIM Dashboard
 
 The IIM Dashboard is a tool developed to display and manage the islanding schemes provided by the IIM component for the purposes of the SDN-microSENSE project.

@@ -17,7 +17,7 @@ python3 -m venv venv
 Activate the environment and install the requirements:
 
 ```
-source venv/bin/activate
+source venv/bin/activate 
 pip3 install -r requirements.txt
 pip3 install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
 ```
@@ -32,7 +32,6 @@ createdb -O iim iimdb
 
 Migrate the project:
 ```
-cd iim_dashboard
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```

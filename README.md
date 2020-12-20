@@ -2,6 +2,8 @@
 
 The IIM Dashboard is a tool developed to display and manage the islanding schemes provided by the IIM component for the purposes of the SDN-microSENSE project.
 
+With the instructions below, you can setup the project on a local machine for testing purposes.
+
 ## Installation
 
 Clone the repository and create a Python virtual environment:
@@ -31,6 +33,12 @@ createuser -P iim
 createdb -O iim iimdb
 ```
 
+Migrate the project:
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
 If there is a migration error, drop the database:
 ```
 dropdb iimdb
@@ -40,4 +48,9 @@ You may also need:
 ```
 find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 find . -path "*/migrations/*.pyc"  -delete
+```
+
+Run the server:
+```
+python3 manage.py runserver
 ```

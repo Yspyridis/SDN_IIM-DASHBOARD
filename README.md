@@ -1,2 +1,2 @@
 # SDN_IIM-DASHBOARD
-/appveyor/build/:user/:repo
+/appveyor/build/:Yspyridis/:SDN_IIM-DASHBOARD

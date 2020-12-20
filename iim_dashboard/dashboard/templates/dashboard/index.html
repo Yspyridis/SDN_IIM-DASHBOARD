@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        IIM 
+                                        Yannis Spyridis 
                                     </div>
                                     <div class="widget-subheading">
                                         Operator
@@ -164,8 +164,10 @@
                             <div style="height: 100px;" class="card mb-3 widget-content">
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">MLST-GAP</div>
-                                        <div class="widget-subheading">12/20/2020, 2:06:34 PM</div>
+                                        <!-- <div class="widget-heading">MLST-GAP</div> -->
+                                        <div id="method" class="widget-heading">Method</div>
+                                        <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
+                                        <div id="date" class="widget-subheading"></div>
                                     </div>
                                     <!-- <div class="widget-content-right">
                                         <div class="widget-numbers text-primary"><span>1sdsd</span></div>
@@ -182,7 +184,7 @@
                                         <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
-                                        <div class="widget-numbers text-primary"><span>188</span></div>
+                                        <div class="widget-numbers text-primary"><span id="total_imbalance"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +198,8 @@
                                         <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
-                                        <div class="widget-numbers text-primary"><span>49 | 101 | 38</span></div>
+                                        <!-- <div class="widget-numbers text-primary"><span>49 | 101 | 38</span></div> -->
+                                        <div class="widget-numbers text-primary"><span id="island_imbalance"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +213,7 @@
                                         <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
-                                        <div class="widget-numbers text-primary"><span>5</span></div>
+                                        <div class="widget-numbers text-primary"><span id="lines"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +227,7 @@
                                         <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
-                                        <div class="widget-numbers text-primary"><span>3</span></div>
+                                        <div class="widget-numbers text-primary"><span id="clusters"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -339,9 +342,10 @@
 
     $(document).ready(function () {
 
-        getNumericalResults();
+        getIslandingPlot('GAP');
+        getNumericalResults('GAP');
 
-        $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid2.png' %}");
+        $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
         // $('#interactive_plot2').load("{% static 'grid_after_islanding/interactive-plot.html' %}");
     });
 
@@ -350,12 +354,16 @@
 
         getIslandingPlot('GAP');
         $(".dropdown-menu").removeClass('show');
+
+        getNumericalResults('GAP');
     });
 
     $("#min-cut").on('click', async function(e) {
 
         getIslandingPlot('MIN-CUT');
         $(".dropdown-menu").removeClass('show');
+
+        getNumericalResults('MIN-CUT');
     });
 
     function getIslandingPlot(method) {
@@ -395,7 +403,7 @@
 		});
     }
 
-    function getNumericalResults() {
+    function getNumericalResults(method) {
 
         $.ajax({
 			url:"{% url 'islanding:islanding_result' %}",
@@ -408,26 +416,46 @@
 				// var d3 = data[2]['date'];
 
 
-				date1 = new Date(d1);
-				date2 = new Date(d2);
-				// date = new Date(d3);
+				var date1 = new Date(d1);
+				var date2 = new Date(d2);
+				// date3 = new Date(d3);
 
 
-                $("#method1").text(data[0]['method_name']);
-                // $("#imbalance1").text(data[0]['island_imbalance']);
-                $("#date1").text(date1.toLocaleString());
-                $("#lines1").text(data[0]['lines_to_cut']);
-                $("#imb_after1").text(data[0]['island_imbalance_after_cut']);
-                $("#total_imb1").text( parseInt(data[0]['total_imbalance_after_cut']) );
-                $("#cluster_no1").text(data[0]['island_imbalance_after_cut'].length);
+               var island_imbalance1 = data[0]['island_imbalance_after_cut'].toString();
+               var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
+               var island_imbalance2 = data[1]['island_imbalance_after_cut'].toString();
+               var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
+            //    var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
+            //    var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
-                $("#method2").text(data[1]['method_name']);
-                // $("#imbalance2").text(data[1]['island_imbalance']);
-                $("#date2").text(date2.toLocaleString());
-                $("#lines2").text(data[1]['lines_to_cut']);
-                $("#imb_after2").text(data[1]['island_imbalance_after_cut']);
-                $("#total_imb2").text( parseInt(data[1]['total_imbalance_after_cut']) );
-                $("#cluster_no2").text(data[1]['island_imbalance_after_cut'].length);
+                console.log(data);
+
+                if (method == 'MIN-CUT') {
+                    $("#method").text(data[0]['method_name']);
+                    $("#date").text(date1.toLocaleString());
+                    $("#lines").text(data[0]['lines_to_cut']);
+                    $("#island_imbalance").text(final_isl_imb1);
+                    $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                    $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
+                }
+                else if (method == 'GAP') {
+                    $("#method").text(data[1]['method_name']);
+                    $("#date").text(date2.toLocaleString());
+                    $("#lines").text(data[1]['lines_to_cut']);
+                    $("#island_imbalance").text(final_isl_imb2);
+                    $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
+                    $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
+                }
+                // else if (method == 'OTSC') {
+                //     $("#method").text(data[2]['method_name']);
+                //     $("#date").text(date3.toLocaleString());
+                //     $("#lines").text(data[2]['lines_to_cut']);
+                //     $("#island_imbalance").text(data[2]['island_imbalance_after_cut']);
+                //     $("#total_imbalance").text( parseInt(data[2]['total_imbalance_after_cut']) );
+                //     $("#clusters").text(data[2]['island_imbalance_after_cut'].length);
+                // }
+
+        
 			},
 			complete:function(data){
 			},

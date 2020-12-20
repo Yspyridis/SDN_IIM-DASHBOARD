@@ -56,8 +56,7 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="{% static 'dashboard/assets/avatars/0.jpg' %}" alt="">
-
+                                            <img width="42" class="rounded-circle" src="{% static 'dashboard/assets/avatars/user.png' %}" alt="">
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             <button type="button" tabindex="0" class="dropdown-item">User Account</button>
@@ -243,13 +242,20 @@
 
 				date1 = new Date(d1);
 				date2 = new Date(d2);
-				// date = new Date(d3);
+				// date3 = new Date(d3);
+
+                var island_imbalance1 = data[0]['island_imbalance_after_cut'].toString();
+                var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
+                var island_imbalance2 = data[1]['island_imbalance_after_cut'].toString();
+                var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
+                //    var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
+                //    var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 $("#method1").text(data[0]['method_name']);
                 // $("#imbalance1").text(data[0]['island_imbalance']);
                 $("#date1").text(date1.toLocaleString());
                 $("#lines1").text(data[0]['lines_to_cut']);
-                $("#imb_after1").text(data[0]['island_imbalance_after_cut']);
+                $("#imb_after1").text(final_isl_imb1);
                 $("#total_imb1").text( parseInt(data[0]['total_imbalance_after_cut']) );
                 $("#cluster_no1").text(data[0]['island_imbalance_after_cut'].length);
 
@@ -257,9 +263,17 @@
                 // $("#imbalance2").text(data[1]['island_imbalance']);
                 $("#date2").text(date2.toLocaleString());
                 $("#lines2").text(data[1]['lines_to_cut']);
-                $("#imb_after2").text(data[1]['island_imbalance_after_cut']);
+                $("#imb_after2").text(final_isl_imb2);
                 $("#total_imb2").text( parseInt(data[1]['total_imbalance_after_cut']) );
                 $("#cluster_no2").text(data[1]['island_imbalance_after_cut'].length);
+
+                // $("#method3").text(data[2]['method_name']);
+                // // $("#imbalance2").text(data[1]['island_imbalance']);
+                // $("#date3").text(date3.toLocaleString());
+                // $("#lines3").text(data[2]['lines_to_cut']);
+                // $("#imb_after3").text(final_isl_imb3);
+                // $("#total_imb3").text( parseInt(data[2]['total_imbalance_after_cut']) );
+                // $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
 			},
 			complete:function(data){
 			},

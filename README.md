@@ -10,7 +10,6 @@ Clone the repository and create a Python virtual environment:
 
 ```
 git clone https://github.com/Yspyridis/SDN_IIM-DASHBOARD.git
-cd SDN_IIM-DASHBOARD
 python3 -m venv venv
 ```
 
@@ -18,6 +17,7 @@ Activate the environment and install the requirements:
 
 ```
 source venv/bin/activate 
+cd SDN_IIM-DASHBOARD
 pip3 install -r requirements.txt
 pip3 install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
 ```

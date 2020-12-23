@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.template import loader
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from islanding.models import IslandingScheme
 import os
@@ -19,16 +22,34 @@ from django.core import serializers
 import pandas as pd
 import json
 
-
+@login_required
 def index(request):
 
     context = {
     'app_name': "dashboard",
     # 'page_name': "overview",
     }
+    # # user = authenticate(username='yannis', password='1234')
+    # if user is not None:
+    #     print('pass')
+        
+    #     template = loader.get_template('dashboard/index.html')
+    #     return HttpResponse(template.render(context, request))
+    # else:
+    #     print('not pass')
+        
+    #     template = loader.get_template('accounts/login.html')
+    #     return HttpResponse(template.render(context, request))
+    
+    # context = {
+    # 'app_name': "dashboard",
+    # # 'page_name': "overview",
+    # }
     template = loader.get_template('dashboard/index.html')
     return HttpResponse(template.render(context, request))
 
+# @login_required(login_url='/registration/login/')
+@login_required
 def compare(request):
 
     context = {
@@ -37,6 +58,31 @@ def compare(request):
     }
     template = loader.get_template('dashboard/compare.html')
     return HttpResponse(template.render(context, request))
+    
+# def login(request):
+
+#     if request.method == 'POST':
+#         form = AuthenticationForm(data = request.POST)
+#         if form.is_valid():
+#             return redirect('/dashboard')
+#         # username = request.POST['username']
+#         # password = request.POST['password']
+        
+#         # user = auth.authenticate(username=username, password=password)
+#         # if user is not None:
+#         #     auth.login(request, user)
+#         #     return redirect('/')
+#     else:
+#         form = AuthenticationForm()
+#     return render(request, 'dashboard/login.html', {'form':form})
+    
+    
+    # context = {
+    # 'app_name': "dashboard",
+    # 'page_name': "login",
+    # }
+    # template = loader.get_template('dashboard/login.html')
+    # return HttpResponse(template.render(context, request))
 
 
 # def islanding_result(request):

@@ -32,6 +32,8 @@ ALLOWED_HOSTS = ['192.168.1.161', '192.168.1.150','localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    # 'accounts.apps.AccountsConfig',
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,6 +134,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+# LOGIN_URL = 'login'
+
+# LOGOUT_URL = 'logout'
+
+# LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'dashboard:index'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

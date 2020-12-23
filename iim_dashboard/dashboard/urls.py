@@ -11,8 +11,5 @@ urlpatterns = [
     url(r'^favicon\.ico$',RedirectView.as_view(url='/static/assets/favicon.ico')),
 
     url('/compare', views.compare, name='compare'),
-    # url('/login', views.login, name='login'),
-    # url(r'^login/$', views.login, name='login')
-
 ]
  

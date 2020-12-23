@@ -1,13 +1,5 @@
-<!-- <!doctype html> -->
-
 {% load static %}
 
-<!-- {% block title %}Visual Analytics{% endblock title %} -->
-
-
-<!-- <html lang="en"> -->
-
-<!-- <head> -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
@@ -29,14 +21,10 @@
 
     <link rel="shortcut icon" href="{% static 'dashboard/assets/favicon.ico' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
-<!-- </head> -->
-
-<!-- <body> -->
 
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <!-- <div class="logo-src"></div> -->
                 <div class="logo" style="font-weight: bold;">IIM Dashhboard</div>
                 <div class="header__pane ml-auto">
                     <div>
@@ -141,7 +129,6 @@
                             </div>
                         </div>
 
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="main-card mb-3 card">
@@ -152,11 +139,9 @@
                                             <thead>
                                             <tr>
                                                 <th class="text-center">Islanding method</th>
-                                                <!-- <th class="text-center">Initial imbalance</th> -->
                                                 <th class="text-center">Date</th>
                                                 <th class="text-center">Lines to cut</th>
                                                 <th class="text-center">Island imbalance</th>
-                                                <!-- <th class="text-center">Powerflow</th> -->
                                                 <th class="text-center">Total imbalance</th>
                                                 <th class="text-center">Number of clusters</th>
                                             </tr>
@@ -165,7 +150,6 @@
 
                                             <tr>
                                               <td id='method1' class=" text-muted"></td>
-                                              <!-- <td id='imbalance1' class=""></td> -->
                                               <td id='date1' class=""></td>
                                               <td id='lines1' class=""></td>
                                               <td id='imb_after1' class=""></td>
@@ -175,7 +159,6 @@
 
                                             <tr>
                                               <td id='method2' class=" text-muted"></td>
-                                              <!-- <td id='imbalance2' class=""></td> -->
                                               <td id='date2' class=""></td>
                                               <td id='lines2' class=""></td>
                                               <td id='imb_after2' class=""></td>
@@ -185,7 +168,6 @@
 
                                             <tr>
                                               <td id='method3' class=" text-muted">OTSC</td>
-                                              <!-- <td id='imbalance2' class=""></td> -->
                                               <td id='date3' class=""></td>
                                               <td id='lines3' class="">-</td>
                                               <td id='imb_after3' class="">-</td>
@@ -284,7 +266,3 @@
     }
 
 </script>
-
-<!-- </body> -->
-
-<!-- </html> -->

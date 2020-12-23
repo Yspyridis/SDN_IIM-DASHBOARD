@@ -134,11 +134,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# LOGIN_URL = 'login'
-
-# LOGOUT_URL = 'logout'
-
-# LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_REDIRECT_URL = 'dashboard:index'
 
 # Static files (CSS, JavaScript, Images)

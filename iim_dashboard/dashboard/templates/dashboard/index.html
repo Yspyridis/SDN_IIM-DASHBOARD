@@ -1,13 +1,5 @@
-<!-- <!doctype html> -->
+% load static %}
 
-{% load static %}
-
-<!-- {% block title %}Visual Analytics{% endblock title %} -->
-
-
-<!-- <html lang="en"> -->
-
-<!-- <head> -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
@@ -29,9 +21,6 @@
 
     <link rel="shortcut icon" href="{% static 'dashboard/assets/favicon.ico' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
-<!-- </head> -->
-
-<!-- <body> -->
 
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
@@ -154,21 +143,13 @@
 
                         <div class="row">
 
-                        <!-- <br><br>
-                        <br><br> -->
-
                         <div class="col-lg-3 col-xl-2">
                             <div style="height: 100px;" class="card mb-3 widget-content">
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
-                                        <!-- <div class="widget-heading">MLST-GAP</div> -->
                                         <div id="method" class="widget-heading">Method</div>
-                                        <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                         <div id="date" class="widget-subheading"></div>
                                     </div>
-                                    <!-- <div class="widget-content-right">
-                                        <div class="widget-numbers text-primary"><span>1sdsd</span></div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -178,7 +159,6 @@
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
                                         <div class="widget-heading">Total Imbalance</div>
-                                        <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-primary"><span id="total_imbalance"></span></div>
@@ -192,10 +172,8 @@
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
                                         <div class="widget-heading">Island Imbalance</div>
-                                        <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
-                                        <!-- <div class="widget-numbers text-primary"><span>49 | 101 | 38</span></div> -->
                                         <div class="widget-numbers text-primary"><span id="island_imbalance"></span></div>
                                     </div>
                                 </div>
@@ -207,7 +185,6 @@
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
                                         <div class="widget-heading">Lines to cut</div>
-                                        <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-primary"><span id="lines"></span></div>
@@ -221,7 +198,6 @@
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
                                         <div class="widget-heading">Number of clusters</div>
-                                        <!-- <div class="widget-subheading">12/20/2020, 2:06:34 PM</div> -->
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-primary"><span id="clusters"></span></div>
@@ -235,62 +211,7 @@
                             
                         </div>
 
-                        <!-- <div class="row">
-                            <div class="col-md-12">
-                                <div class="main-card mb-3 card">
-                                    <div class="card-header">Grid data
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="text-center mb-0 table table-borderless table-striped table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th class="text-center">Islanding method</th>
-                                                <th class="text-center">Date</th>
-                                                <th class="text-center">Lines to cut</th>
-                                                <th class="text-center">Island imbalance</th>
-                                                <th class="text-center">Total imbalance</th>
-                                                <th class="text-center">Number of clusters</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            <tr>
-                                              <td id='method1' class=" text-muted"></td>
-                                              <td id='date1' class=""></td>
-                                              <td id='lines1' class=""></td>
-                                              <td id='imb_after1' class=""></td>
-                                              <td id='total_imb1' class=""></td>
-                                              <td id='cluster_no1' class=""></td>
-                                            </tr>
-
-                                            <tr>
-                                              <td id='method2' class=" text-muted"></td>
-                                              <td id='date2' class=""></td>
-                                              <td id='lines2' class=""></td>
-                                              <td id='imb_after2' class=""></td>
-                                              <td id='total_imb2' class=""></td>
-                                              <td id='cluster_no2' class=""></td>
-                                            </tr>
-
-                                            <tr>
-                                              <td id='method3' class=" text-muted">OTSC</td>
-                                              <td id='date3' class=""></td>
-                                              <td id='lines3' class="">-</td>
-                                              <td id='imb_after3' class="">-</td>
-                                              <td id='total_imb3' class="">-</td>
-                                              <td id='cluster_no3' class="">-</td>
-                                            </tr>
-
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <div class="row">
+                       <div class="row">
                             <div class="col-md-12 col-lg-12">
                                 <div style="width:100%; height:auto" class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
@@ -343,7 +264,6 @@
         getNumericalResults('GAP');
 
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
-        // $('#interactive_plot2').load("{% static 'grid_after_islanding/interactive-plot.html' %}");
     });
 
 
@@ -412,11 +332,9 @@
 				var d2 = data[1]['date'];
 				// var d3 = data[2]['date'];
 
-
 				var date1 = new Date(d1);
 				var date2 = new Date(d2);
 				// date3 = new Date(d3);
-
 
                var island_imbalance1 = data[0]['island_imbalance_after_cut'].toString();
                var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
@@ -463,7 +381,3 @@
     }
 
 </script>
-
-<!-- </body> -->
-
-<!-- </html> -->

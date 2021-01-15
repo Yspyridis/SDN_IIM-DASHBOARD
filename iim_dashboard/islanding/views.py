@@ -35,10 +35,14 @@ def islanding_plot(request):
 
     # ######### Get grid json and plot image of result ##########
     mygrid = IslandingScheme.objects.filter(method_name=method).last().grid
-
+    # fgrid = str(mygrid)
+    # fgrid2 = '"{}"'.format(fgrid)
+    
     with open('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt', 'w') as f:
         f.write(mygrid)
 
+    # print(fgrid)
+    # print(fgrid2)
     net_after = pp.from_json('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt')
 
     pp.plotting.simple_plot(net_after, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
@@ -55,7 +59,9 @@ def islanding_plot(request):
 @api_view(['GET', 'POST'])
 def islanding_result(request):
         
-    if request.method == 'GET':
+    if request.method == 'GET' and 'date' in request.GET:
+        
+        request_date = request.GET['date']
         
         ################ Get the numerical results #################
         # Get all fields amd remove grid because it is huge and not needed here
@@ -64,7 +70,10 @@ def islanding_result(request):
     
         # Now query the results without the grid
         # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
-        results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
+        # results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
+        results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:3].values(*fields)
+        # print('the results are ')
+        # print(results)
         df = pd.DataFrame(data=results)
         response_json = df.to_json(orient='records')
         ############################################################
@@ -79,6 +88,25 @@ def islanding_result(request):
             islanding_serializer.save()
             return JsonResponse(islanding_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(islanding_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    else :
+    
+        ################ Get the numerical results #################
+        # Get all fields amd remove grid because it is huge and not needed here
+        fields = [f.name for f in IslandingScheme._meta.get_fields()]
+        fields.remove('grid')
+    
+        # Now query the results without the grid
+        # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
+        results = IslandingScheme.objects.all().order_by('-id')[:3].values(*fields)
+        # results = IslandingScheme.objects.filter(date__contains=request_date).values(*fields)
+        print('the results are ')
+        print(results)
+        df = pd.DataFrame(data=results)
+        response_json = df.to_json(orient='records')
+        ############################################################   
+        
+        return HttpResponse(response_json, content_type='application/json')
         
     # elif request.method == 'DELETE':
     #     count = Islanding.objects.all().delete()

@@ -21,6 +21,12 @@
 
     <link rel="shortcut icon" href="{% static 'dashboard/assets/favicon.ico' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/bootstrap-datepicker.min.css' %}">
+    
+    <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/bootstrap-datepicker.min.js' %}"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
@@ -86,7 +92,18 @@
                 </div>
                 <div class="app-main__outer">
                     <div class="app-main__inner">
-
+                        
+                        <div class="row">
+                            <div class="col-sm-12">
+                            <div style="width:217px" class="input-group">
+                                <input type="text" class="btn btn-primary form-control datepicker" id="datepicker-autoclose" placeholder="Select Date">
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        <br>
+                        
                         <div class="row">
                             <div class="col-md-12 col-lg-4">
                                 <div class="mb-3 card">
@@ -134,7 +151,7 @@
                                 <div class="main-card mb-3 card">
                                     <div class="card-header">Grid data
                                     </div>
-                                    <div class="table-responsive">
+                                    <div id="table_grid" class="table-responsive">
                                         <table class="text-center mb-0 table table-borderless table-striped table-hover">
                                             <thead>
                                             <tr>
@@ -195,46 +212,113 @@
         </div>
     </div>
 
-<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
 
 <script>
 
     $(document).ready(function () {
-
-        getNumericalResults();
+        
+        createDatePicker();
+		date = formatDate(new Date($('#datepicker-autoclose').val()));
+		
+        getNumericalResults(date);
 
         $("#islanding_min-cut").attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
         $('#islanding_gap').attr("src", "{% static 'grid_after_islanding/grid_after_GAP.png' %}");
         $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC.png' %}");
     });
+    
+    // returns the date in 2 digit format
+    function formatDate(date) {
 
-    function getNumericalResults() {
+        return date.getFullYear()+"-"+("0" + (date.getMonth() + 1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2);
+    }
+    
+    function createDatePicker() {
+		var date = new Date();
+		var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		// var yesterday = new Date();
+		// yesterday.setDate(today.getDate() - 1);
+
+		jQuery('#datepicker-autoclose').datepicker({
+			autoclose: true,
+			todayHighlight: true,
+			endDate: "today",
+			maxDate: today,
+			todayBtn: "linked",
+			orientation: "left",
+		});
+		$( '#datepicker-autoclose' ).datepicker( 'setDate', today );
+	}
+
+	$("#datepicker-autoclose").change(function(){
+		var date = formatDate((new Date($(this).val())));
+		// alert("Chose date!");
+		// $( "#diagram_date" ).hide();
+		// $( "#date_distance" ).hide();
+		// $( "#date_covariance" ).hide();
+		// $("#dateButtons button").not(this).removeClass("active");
+		clearTable();
+		getNumericalResults(date);
+	})
+	
+	function clearTable() {
+	
+        $("#method1").text('-');
+        $("#date1").text('-');
+        $("#lines1").text('-');
+        $("#imb_after1").text('-');
+        $("#total_imb1").text('-');
+        $("#cluster_no1").text('-');
+
+        $("#method2").text('-');
+        $("#date2").text('-');
+        $("#lines2").text('-');
+        $("#imb_after2").text('-');
+        $("#total_imb2").text('-');
+        $("#cluster_no2").text('-');
+        
+        $("#method3").text('-');
+        $("#date3").text('-');
+        $("#lines3").text('-');
+        $("#imb_after3").text('-');
+        $("#total_imb3").text('-');
+        $("#cluster_no3").text('-');
+        
+        $("#islanding_min-cut").attr("src", "");
+        $('#islanding_gap').attr("src", "");
+        $('#islanding_otsc').attr("src", "");
+	}
+	
+    function getNumericalResults(date) {
 
         $.ajax({
 			url:"{% url 'islanding:islanding_result' %}",
 			type: "GET",
+			data: {
+				date: date
+			},
 			success: function (data) {
 
-				console.log("gets in getIslanding()");
+				console.log("gets in getIslanding() with ");
+				console.log(data);
+				
 				var d1 = data[0]['date'];
 				var d2 = data[1]['date'];
-				// var d3 = data[2]['date'];
+				var d3 = data[2]['date'];
 
 				date1 = new Date(d1);
 				date2 = new Date(d2);
-				// date3 = new Date(d3);
+				date3 = new Date(d3);
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'].toString();
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
                 var island_imbalance2 = data[1]['island_imbalance_after_cut'].toString();
                 var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
-                //    var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
-                //    var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+                var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
+                var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 $("#method1").text(data[0]['method_name']);
-                // $("#imbalance1").text(data[0]['island_imbalance']);
                 $("#date1").text(date1.toLocaleString());
                 $("#lines1").text(data[0]['lines_to_cut']);
                 $("#imb_after1").text(final_isl_imb1);
@@ -242,20 +326,22 @@
                 $("#cluster_no1").text(data[0]['island_imbalance_after_cut'].length);
 
                 $("#method2").text(data[1]['method_name']);
-                // $("#imbalance2").text(data[1]['island_imbalance']);
                 $("#date2").text(date2.toLocaleString());
                 $("#lines2").text(data[1]['lines_to_cut']);
                 $("#imb_after2").text(final_isl_imb2);
                 $("#total_imb2").text( parseInt(data[1]['total_imbalance_after_cut']) );
                 $("#cluster_no2").text(data[1]['island_imbalance_after_cut'].length);
 
-                // $("#method3").text(data[2]['method_name']);
-                // // $("#imbalance2").text(data[1]['island_imbalance']);
-                // $("#date3").text(date3.toLocaleString());
-                // $("#lines3").text(data[2]['lines_to_cut']);
-                // $("#imb_after3").text(final_isl_imb3);
-                // $("#total_imb3").text( parseInt(data[2]['total_imbalance_after_cut']) );
-                // $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
+                $("#method3").text(data[2]['method_name']);
+                $("#date3").text(date3.toLocaleString());
+                $("#lines3").text(data[2]['lines_to_cut']);
+                $("#imb_after3").text(final_isl_imb3);
+                $("#total_imb3").text( parseInt(data[2]['total_imbalance_after_cut']) );
+                $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
+                
+                $("#islanding_min-cut").attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
+                $('#islanding_gap').attr("src", "{% static 'grid_after_islanding/grid_after_GAP.png' %}");
+                $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC.png' %}");
 			},
 			complete:function(data){
 			},

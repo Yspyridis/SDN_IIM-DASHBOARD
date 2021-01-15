@@ -87,26 +87,32 @@
                 </div>
                 <div class="app-main__outer">
                     <div class="app-main__inner">
-
-                        <div id="select_view" class="dropdown d-inline-block">
-                            <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-primary">Select Islanding Method</button>
-                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
-                                <h6 tabindex="-1" class="dropdown-header">MLST</h6>
-                                <button id="gap" type="button" tabindex="0" class="dropdown-item">Gap</button>
-                                <button id="min-cut" type="button" tabindex="0" class="dropdown-item">Min-cut</button>
-                                <h6 tabindex="-1" class="dropdown-header">OTSC</h6>
-                                <button id="otsc" type="button" tabindex="0" class="dropdown-item">Otsc</button>
+                        
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div style="width:250px" id="select_view" class="input-group dropdown d-inline-block">
+                                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="btn btn-primary">Select Islanding Method</button>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
+                                        <h6 tabindex="-1" class="dropdown-header">MLST</h6>
+                                        <button id="gap" type="button" tabindex="0" class="dropdown-item">Gap</button>
+                                        <button id="min-cut" type="button" tabindex="0" class="dropdown-item">Min-cut</button>
+                                        <h6 tabindex="-1" class="dropdown-header">OTSC</h6>
+                                        <button id="otsc" type="button" tabindex="0" class="dropdown-item">Otsc</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
 
-                        <div id="select_view" class="dropdown d-inline-block">
+                                            
+                        <!-- <div id="select_view" class="dropdown d-inline-block">
                             <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-primary">Select View</button>
                             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
                                 <button id="test" type="button" tabindex="0" class="dropdown-item">Simple</button>
                                 <button type="button" tabindex="0" class="dropdown-item">Map</button>
                                 <button type="button" tabindex="0" class="dropdown-item">Satellite</button>
                             </div>
-                        </div>
+                        </div> -->
 
                         <br>
                         <br>
@@ -263,6 +269,7 @@
         getIslandingPlot('GAP');
         getNumericalResults('GAP');
 
+        $("#grid_initial_1").attr("src", "");
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
     });
 
@@ -281,6 +288,14 @@
         $(".dropdown-menu").removeClass('show');
 
         getNumericalResults('MIN-CUT');
+    });
+    
+    $("#otsc").on('click', async function(e) {
+
+        getIslandingPlot('OTSC');
+        $(".dropdown-menu").removeClass('show');
+
+        getNumericalResults('OTSC');
     });
 
     function getIslandingPlot(method) {
@@ -307,6 +322,11 @@
                     url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}"
                     url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}"
                 }
+                else if (method == 'OTSC') {
+                    url = "{% static 'grid_after_islanding/grid_after_OTSC.png' %}"
+                    url2= "{% static 'grid_after_islanding/interactive-plot_OTSC.html' %}"
+                    url3= "{% static 'grid_after_islanding/interactive-plot2_OTSC.html' %}"
+                }
 
                 $("#grid_after").attr("src", url);
                 $('#interactive_plot').load(url2);
@@ -328,32 +348,26 @@
 			success: function (data) {
 
 				console.log("gets in getIslanding()");
+				console.log(data);
+				
 				var d1 = data[0]['date'];
 				var d2 = data[1]['date'];
-				// var d3 = data[2]['date'];
+				var d3 = data[2]['date'];
 
 				var date1 = new Date(d1);
 				var date2 = new Date(d2);
-				// date3 = new Date(d3);
+				var date3 = new Date(d3);
 
                var island_imbalance1 = data[0]['island_imbalance_after_cut'].toString();
                var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
                var island_imbalance2 = data[1]['island_imbalance_after_cut'].toString();
                var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
-            //    var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
-            //    var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+               var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
+               var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 console.log(data);
 
                 if (method == 'MIN-CUT') {
-                    $("#method").text(data[0]['method_name']);
-                    $("#date").text(date1.toLocaleString());
-                    $("#lines").text(data[0]['lines_to_cut']);
-                    $("#island_imbalance").text(final_isl_imb1);
-                    $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
-                    $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
-                }
-                else if (method == 'GAP') {
                     $("#method").text(data[1]['method_name']);
                     $("#date").text(date2.toLocaleString());
                     $("#lines").text(data[1]['lines_to_cut']);
@@ -361,14 +375,22 @@
                     $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
                     $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
                 }
-                // else if (method == 'OTSC') {
-                //     $("#method").text(data[2]['method_name']);
-                //     $("#date").text(date3.toLocaleString());
-                //     $("#lines").text(data[2]['lines_to_cut']);
-                //     $("#island_imbalance").text(data[2]['island_imbalance_after_cut']);
-                //     $("#total_imbalance").text( parseInt(data[2]['total_imbalance_after_cut']) );
-                //     $("#clusters").text(data[2]['island_imbalance_after_cut'].length);
-                // }
+                else if (method == 'GAP') {
+                    $("#method").text(data[2]['method_name']);
+                    $("#date").text(date3.toLocaleString());
+                    $("#lines").text(data[2]['lines_to_cut']);
+                    $("#island_imbalance").text(final_isl_imb3);
+                    $("#total_imbalance").text( parseInt(data[2]['total_imbalance_after_cut']) );
+                    $("#clusters").text(data[2]['island_imbalance_after_cut'].length);
+                }
+                else if (method == 'OTSC') {
+                    $("#method").text(data[0]['method_name']);
+                    $("#date").text(date1.toLocaleString());
+                    $("#lines").text(data[0]['lines_to_cut']);
+                    $("#island_imbalance").text(final_isl_imb1);
+                    $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                    $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
+                }
 
         
 			},

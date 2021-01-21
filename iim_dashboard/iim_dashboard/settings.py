@@ -85,6 +85,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'iim_dashboard.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
+
+REST_SESSION_LOGIN = False
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

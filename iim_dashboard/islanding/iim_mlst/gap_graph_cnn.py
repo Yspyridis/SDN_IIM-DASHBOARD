@@ -52,14 +52,59 @@ from islanding.models import IslandingScheme
 
 from pandapower.plotting.plotly import simple_plotly
 
+# SET VARIABLES
+epochs  = 1000
+# epochs  = 2500
+# kappa   = 2 
+kappa   = 3 
+# new_net = pp.from_json('test.json')
+
+# pp.diagnostic(new_net, report_style='detailed', warnings_only=False, return_result_dict=True, overload_scaling_factor=0.001, min_r_ohm=0.001, min_x_ohm=0.001, min_r_pu=1e-05, min_x_pu=1e-05, nom_voltage_tolerance=0.3, numba_tolerance=1e-05)
+
+print('#######################################')
+
+# ######### Get grid json and plot image of result ##########
+# mygrid = IslandingScheme.objects.filter(method_name='OTSC IIM').last().grid
+# fgrid = str(mygrid)
+# fgrid2 = '"{}"'.format(fgrid)
+
+# with open('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt', 'w') as f:
+#     f.write(mygrid)
+
+# print(fgrid)
+# print(fgrid2)
+# net_after = pp.from_json('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt')
+
+# pp.plotting.to_html(net_after, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_TEST.html', show_tables=False)
+# simple_plotly_gen(net_after, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_TEST.html')
+# # new_data = new_net['grid']
+
+# # new_net = json.dumps(new_data)
+# print(net_after)    
+
+# new_net = pp.networks.case14()
+# new_net = pp.networks.case_ieee30()
+
+
+# def evaluation_mini_imblance(X_hat,output_predict,bus_inc):
+#     bus_inc=torch.from_numpy(bus_inc).to(device).unsqueeze(1).float()
+#     # output_predict = torch.argmax(X_hat, dim=1)
+#     predict_binary_matrix=torch.zeros_like(X_hat)
+#     for i  in range(len(output_predict)):
+#         predict_binary_matrix[i,output_predict[i]]=1
+#     island_inc = torch.abs(torch.mm(predict_binary_matrix.t(), bus_inc))
+#     sum_inc=torch.sum(island_inc)
+
+#     return sum_inc,island_inc
+
 def evaluation_mini_imblance(X_hat,output_predict,bus_inc):
     bus_inc=torch.from_numpy(bus_inc).to(device).unsqueeze(1).float()
     # output_predict = torch.argmax(X_hat, dim=1)
     predict_binary_matrix=torch.zeros_like(X_hat)
     for i  in range(len(output_predict)):
         predict_binary_matrix[i,output_predict[i]]=1
-    island_inc = torch.abs(torch.mm(predict_binary_matrix.t(), bus_inc))
-    sum_inc=torch.sum(island_inc)
+    island_inc = torch.mm(predict_binary_matrix.t(), bus_inc)
+    sum_inc=torch.abs(torch.sum(island_inc))
 
     return sum_inc,island_inc
 
@@ -95,9 +140,11 @@ def euclidean_distances(x, all_vec):
 
 
 # Here replace with AIDB connection
-# net= pp.from_json('test.json')
+# net= new_net
 # net.bus.drop(0, inplace=True)
 # pp.set_element_status(net, 0, in_service=False)
+# pp.plotting.to_html(new_net, filename='islanding/iim_mlst/static/grid_after_islanding/initial.html', show_tables=False)
+# simple_plotly_gen(new_net, file_name='islanding/iim_mlst/static/grid_after_islanding/initial2.html')
 
 # net=pp.networks.case5()
 # net=pp.networks.case9()
@@ -117,7 +164,7 @@ pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.
 plt.savefig('islanding/iim_mlst/static/grid_initial/grid.png')
 
 
-simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plotTEST.html')
+# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plotTEST.html')
 
 # ########## Import binary pandapower network file ##########
 # net2 = pp.from_pickle("case14_after.p") #relative path
@@ -154,7 +201,7 @@ args = parser.parse_args()
 # k=2
 # num_epoch=500   #number of training time
 # num_epoch=1000   #number of training time
-num_epoch=3000   #number of training time
+num_epoch=epochs   #number of training time
 
 def search_1d(a,lines):
     """find the corresponding index that a=lines[i]"""
@@ -169,6 +216,7 @@ def search_1d(a,lines):
     return count,result_search
 #panpower powerflow
 pp.runpp(net)
+print(pp.runpp(net))
 
 
 case_num=len(net.res_bus)
@@ -179,8 +227,8 @@ save_fig_path='static/case_'+str(case_num)
 #generator
 gen=net.gen
 
-k=3     #k is number of partitions, should be mannually point.
-# k=2     #k is number of partitions, should be mannually point.
+# k=3     #k is number of partitions, should be mannually point.
+k=kappa    #k is number of partitions, should be mannually point.
 # 
 #s_generator
 # gen=net.sgen
@@ -375,6 +423,16 @@ total_imbalance_initial = 0
 # lines = 0
 ##
 
+print('|###########################################|')
+
+print(type(X_hat))
+print(X_hat)
+print(type(output_predict))
+print(output_predict)
+print(type(bus_inc))
+print(bus_inc)
+
+print('|###########################################|')
 
 sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
 for i in range(len(island_inc)):
@@ -570,6 +628,9 @@ pp.runpp(net)
 
 # HERE
 # print(island_imbalance_after)
+pp.runpp(net)
+print(pp.runpp(net))
+
 jnet=pp.to_json(net, filename=None, encryption_key=None)
 method='GAP'
 # IslandingScheme.objects.all().delete()
@@ -585,7 +646,8 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 #################### FOR MIN-CUT METHOD ####################
 
-# net= pp.from_json('test.json')
+# net= new_net
+# net=pp.from_json('test.json')
 # net=pp.networks.case5()
 # net=pp.networks.case9()
 # net=pp.networks.case14()
@@ -611,8 +673,8 @@ args = parser.parse_args()
 # k=2
 
 # num_epoch=500   #number of training time
-# num_epoch=1000   #number of training time
-num_epoch=5000   #number of training time
+num_epoch=epochs   #number of training time
+# num_epoch=2500   #number of training time
 
 def search_1d(a,lines):
     """find the corresponding index that a=lines[i]"""
@@ -637,8 +699,8 @@ save_fig_path='static/case_'+str(case_num)
 #generator
 gen=net.gen
 
-# k=2     #k is number of partitions, should be mannually point.
-k=3     #k is number of partitions, should be mannually point.
+k=kappa    #k is number of partitions, should be mannually point.
+# k=2  #k is number of partitions, should be mannually point.
 
 #s_generator
 # gen=net.sgen

@@ -95,13 +95,16 @@ def euclidean_distances(x, all_vec):
 
 
 # Here replace with AIDB connection
-net= pp.from_json('test.json')
+# net= pp.from_json('test.json')
+# net.bus.drop(0, inplace=True)
+# pp.set_element_status(net, 0, in_service=False)
+
 # net=pp.networks.case5()
 # net=pp.networks.case9()
 # net=pp.networks.case14()
 # net=pp.networks.case24_ieee_rts()
 # net=pp.networks.case30()
-# net=pp.networks.case_ieee30()
+net=pp.networks.case_ieee30()
 # net=pp.networks.case145()
 
 # ########## Save binary, json, excel pandapower network file ##########
@@ -113,6 +116,8 @@ net= pp.from_json('test.json')
 pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
 plt.savefig('islanding/iim_mlst/static/grid_initial/grid.png')
 
+
+simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plotTEST.html')
 
 # ########## Import binary pandapower network file ##########
 # net2 = pp.from_pickle("case14_after.p") #relative path
@@ -147,9 +152,9 @@ args = parser.parse_args()
 
 
 # k=2
-# num_epoch=100   #number of training time
-num_epoch=500   #number of training time
-# num_epoch=3000   #number of training time
+# num_epoch=500   #number of training time
+# num_epoch=1000   #number of training time
+num_epoch=3000   #number of training time
 
 def search_1d(a,lines):
     """find the corresponding index that a=lines[i]"""
@@ -174,9 +179,9 @@ save_fig_path='static/case_'+str(case_num)
 #generator
 gen=net.gen
 
-# k=3     #k is number of partitions, should be mannually point.
-k=2     #k is number of partitions, should be mannually point.
-
+k=3     #k is number of partitions, should be mannually point.
+# k=2     #k is number of partitions, should be mannually point.
+# 
 #s_generator
 # gen=net.sgen
 # k=len(gen)
@@ -374,10 +379,10 @@ total_imbalance_initial = 0
 sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
 for i in range(len(island_inc)):
     print('island imbalance ' +str(i)+': '+str(island_inc[i]))
-    island_imbalance_initial.append( int(island_inc[i].numpy()[0]) )
+    island_imbalance_initial.append( island_inc[i].numpy()[0] )
 print('total island imbalance= '+str(sum_inc) )
 
-total_imbalance_initial = int(sum_inc)
+total_imbalance_initial = sum_inc
 #part- plot
 
 # plot_net_with_label(net,file_path=save_fig_path+'/case_'+str(case_num)+'_cluster')
@@ -547,7 +552,7 @@ lines = 0
 
 for i in range(len(island_inc)):
     print('island imbalance ' +str(i)+': '+str(island_inc[i]))
-    island_imbalance_after.append( int(island_inc[i].numpy()[0]) )
+    island_imbalance_after.append( island_inc[i].numpy()[0] )
 print('total island imbalance= '+str(sum_inc) )
 print('number of lines to cut= '+str(number_lines))
 
@@ -580,12 +585,13 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 #################### FOR MIN-CUT METHOD ####################
 
-net= pp.from_json('test.json')
+# net= pp.from_json('test.json')
 # net=pp.networks.case5()
+# net=pp.networks.case9()
 # net=pp.networks.case14()
 # net=pp.networks.case24_ieee_rts()
 # net=pp.networks.case30()
-# net=pp.networks.case_ieee30()
+net=pp.networks.case_ieee30()
 # net=pp.networks.case145()
 
 parser = argparse.ArgumentParser()
@@ -603,9 +609,10 @@ args = parser.parse_args()
 
 
 # k=2
-# num_epoch=100   #number of training time
-num_epoch=500   #number of training time
-# num_epoch=3000   #number of training time
+
+# num_epoch=500   #number of training time
+# num_epoch=1000   #number of training time
+num_epoch=5000   #number of training time
 
 def search_1d(a,lines):
     """find the corresponding index that a=lines[i]"""
@@ -630,8 +637,8 @@ save_fig_path='static/case_'+str(case_num)
 #generator
 gen=net.gen
 
-k=2     #k is number of partitions, should be mannually point.
-# k=3     #k is number of partitions, should be mannually point.
+# k=2     #k is number of partitions, should be mannually point.
+k=3     #k is number of partitions, should be mannually point.
 
 #s_generator
 # gen=net.sgen
@@ -830,10 +837,11 @@ total_imbalance_initial = 0
 sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
 for i in range(len(island_inc)):
     print('island imbalance ' +str(i)+': '+str(island_inc[i]))
-    island_imbalance_initial.append( int(island_inc[i].numpy()[0]) )
+    # island_imbalance_initial.append( int(island_inc[i].numpy()[0]) )
+    island_imbalance_initial.append( island_inc[i].numpy()[0] )
 print('total island imbalance= '+str(sum_inc) )
 
-total_imbalance_initial = int(sum_inc)
+total_imbalance_initial = sum_inc
 #part- plot
 
 # plot_net_with_label(net,file_path=save_fig_path+'/case_'+str(case_num)+'_cluster')
@@ -1003,7 +1011,7 @@ lines = 0
 
 for i in range(len(island_inc)):
     print('island imbalance ' +str(i)+': '+str(island_inc[i]))
-    island_imbalance_after.append( int(island_inc[i].numpy()[0]) )
+    island_imbalance_after.append( island_inc[i].numpy()[0] )
 print('total island imbalance= '+str(sum_inc) )
 print('number of lines to cut= '+str(number_lines))
 
@@ -1034,22 +1042,27 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 #################### END MIN-CUT METHOD ####################
 
-otsc_netpp = pp.from_json('test.json', convert=True, encryption_key=None)
+# otsc_netpp = pp.from_json('Case5_Ring_0_results_0.json', convert=True, encryption_key=None)
+# method='OTSC'
 
-otsc_net = pp.to_json(otsc_netpp, filename=None, encryption_key=None)
+# pp.plotting.to_html(otsc_netpp, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
+# simple_plotly_gen(otsc_netpp, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
-# with open('test.json') as f:
-#         try:
-#             otsc_net = json.load(f)
-#         except:
-#             otsc_net = {}
+
+# otsc_net = pp.to_json(otsc_netpp, filename=None, encryption_key=None)
+
+# # with open('test.json') as f:
+# #         try:
+# #             otsc_net = json.load(f)
+# #         except:
+# #             otsc_net = {}
             
-# otsc_net = open('test.json',"a")
+# # otsc_net = open('test.json',"a")
 
-IslandingScheme.objects.create( method_name='OTSC', island_imbalance=island_imbalance_initial, total_imbalance=total_imbalance_initial, island_imbalance_after_cut=island_imbalance_after, total_imbalance_after_cut=total_imbalance_after, lines_to_cut=lines, grid=otsc_net )
+# IslandingScheme.objects.create( method_name='OTSC', island_imbalance=island_imbalance_initial, total_imbalance=total_imbalance_initial, island_imbalance_after_cut=island_imbalance_after, total_imbalance_after_cut=total_imbalance_after, lines_to_cut=lines, grid=otsc_net )
 
-pp.plotting.to_html(otsc_net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-simple_plotly_gen(otsc_net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+# pp.plotting.to_html(otsc_net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
+# simple_plotly_gen(otsc_net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
 # IslandingScheme.objects.all().delete()
 

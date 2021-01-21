@@ -12,12 +12,23 @@ exit
 systemctl start postgresql.service
 systemctl enable postgresql.service 
 
+Maybe you need to:
+sudo -u postgres -i
+createuser yannis <- linux username
+exit
+
 ###################################
 createuser -P iim
 provide '1234' as a password
 $ createdb -O iim iimdb
 
 * to remove DB use (in case of migration problem): dropdb iimdb
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+maybe re install django (works sometimes)
+makemigrations
+migrate
 ###################################
 
 

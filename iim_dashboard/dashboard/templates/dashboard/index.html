@@ -326,6 +326,9 @@
                     url = "{% static 'grid_after_islanding/grid_after_OTSC.png' %}"
                     url2= "{% static 'grid_after_islanding/interactive-plot_OTSC.html' %}"
                     url3= "{% static 'grid_after_islanding/interactive-plot2_OTSC.html' %}"
+                    // url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}"
+                    // url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}"
+                    // url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}"
                 }
 
                 $("#grid_after").attr("src", url);
@@ -335,7 +338,8 @@
 			complete:function(data){
 			},
 			error:function (xhr, textStatus, thrownError){
-				alert("An error occured, please try again later.");
+				// alert("An error occured, please try again later.");
+				alert("No islanding result available, please try again later.");
 			}
 		});
     }
@@ -368,29 +372,60 @@
                 console.log(data);
 
                 if (method == 'MIN-CUT') {
-                    $("#method").text(data[1]['method_name']);
-                    $("#date").text(date2.toLocaleString());
-                    $("#lines").text(data[1]['lines_to_cut']);
-                    $("#island_imbalance").text(final_isl_imb2);
-                    $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
-                    $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
-                }
-                else if (method == 'GAP') {
-                    $("#method").text(data[2]['method_name']);
-                    $("#date").text(date3.toLocaleString());
-                    $("#lines").text(data[2]['lines_to_cut']);
-                    $("#island_imbalance").text(final_isl_imb3);
-                    $("#total_imbalance").text( parseInt(data[2]['total_imbalance_after_cut']) );
-                    $("#clusters").text(data[2]['island_imbalance_after_cut'].length);
-                }
-                else if (method == 'OTSC') {
                     $("#method").text(data[0]['method_name']);
                     $("#date").text(date1.toLocaleString());
                     $("#lines").text(data[0]['lines_to_cut']);
                     $("#island_imbalance").text(final_isl_imb1);
-                    $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                    // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                    $("#total_imbalance").text( data[0]['total_imbalance_after_cut'].toFixed(2) );
                     $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
                 }
+                else if (method == 'GAP') {
+                    $("#method").text(data[1]['method_name']);
+                    $("#date").text(date2.toLocaleString());
+                    $("#lines").text(data[1]['lines_to_cut']);
+                    $("#island_imbalance").text(final_isl_imb2);
+                    // $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
+                    $("#total_imbalance").text( data[1]['total_imbalance_after_cut'].toFixed(2) );
+                    $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
+                }
+                // else if (method == 'OTSC') {
+                //     $("#method").text(data[0]['method_name']);
+                //     $("#date").text(date1.toLocaleString());
+                //     $("#lines").text(data[0]['lines_to_cut']);
+                //     $("#island_imbalance").text(final_isl_imb1);
+                //     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                //     $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']).toFixed(2) );
+                //     $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
+                // }
+
+                // if (method == 'MIN-CUT') {
+                //     $("#method").text(data[1]['method_name']);
+                //     $("#date").text(date2.toLocaleString());
+                //     $("#lines").text(data[1]['lines_to_cut']);
+                //     $("#island_imbalance").text(final_isl_imb2);
+                //     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                //     $("#total_imbalance").text( data[1]['total_imbalance_after_cut'].toFixed(2) );
+                //     $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
+                // }
+                // else if (method == 'GAP') {
+                //     $("#method").text(data[2]['method_name']);
+                //     $("#date").text(date3.toLocaleString());
+                //     $("#lines").text(data[2]['lines_to_cut']);
+                //     $("#island_imbalance").text(final_isl_imb3);
+                //     // $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
+                //     $("#total_imbalance").text( data[1]['total_imbalance_after_cut'].toFixed(2) );
+                //     $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
+                // }
+                // else if (method == 'OTSC') {
+                //     $("#method").text(data[0]['method_name']);
+                //     $("#date").text(date1.toLocaleString());
+                //     $("#lines").text(data[0]['lines_to_cut']);
+                //     $("#island_imbalance").text(final_isl_imb1);
+                //     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                //     $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']).toFixed(2) );
+                //     $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
+                // }
 
         
 			},

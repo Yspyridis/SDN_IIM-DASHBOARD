@@ -15,6 +15,8 @@ class IslandingScheme(models.Model):
     
     island_imbalance           = ArrayField(models.IntegerField(blank=True, null=True), size=3, null=True)
     total_imbalance            = models.FloatField(blank=True, null=True)
+    # island_imbalance           = ArrayField(models.FloatField(blank=True, null=True), size=3, null=True)
+    # total_imbalance            = models.FloatField(blank=True, null=True)
     
     island_imbalance_after_cut = ArrayField(models.IntegerField(blank=True, null=True), size=3, null=True)
     total_imbalance_after_cut  = models.FloatField(blank=True, null=True)

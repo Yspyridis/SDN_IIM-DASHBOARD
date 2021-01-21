@@ -105,7 +105,7 @@
                         <br>
                         
                         <div class="row">
-                            <div class="col-md-12 col-lg-4">
+                            <div class="col-md-12 col-lg-6">
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
@@ -118,7 +118,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-4">
+                            <div class="col-md-12 col-lg-6">
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-4">
+                            <!-- <div class="col-md-12 col-lg-4">
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
@@ -143,7 +143,7 @@
                                       <img id="islanding_otsc" style="max-width:90%; max-height:100%;"></img>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row">
@@ -183,14 +183,14 @@
                                               <td id='cluster_no2' class=""></td>
                                             </tr>
 
-                                            <tr>
+                                            <!-- <tr>
                                               <td id='method3' class=" text-muted">OTSC</td>
                                               <td id='date3' class=""></td>
                                               <td id='lines3' class="">-</td>
                                               <td id='imb_after3' class="">-</td>
                                               <td id='total_imb3' class="">-</td>
                                               <td id='cluster_no3' class="">-</td>
-                                            </tr>
+                                            </tr> -->
 
                                             </tr>
                                             </tbody>
@@ -305,18 +305,18 @@
 				
 				var d1 = data[0]['date'];
 				var d2 = data[1]['date'];
-				var d3 = data[2]['date'];
+				// var d3 = data[2]['date'];
 
 				date1 = new Date(d1);
 				date2 = new Date(d2);
-				date3 = new Date(d3);
+				// date3 = new Date(d3);
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'].toString();
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
                 var island_imbalance2 = data[1]['island_imbalance_after_cut'].toString();
                 var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
-                var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
-                var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+                // var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
+                // var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 $("#method1").text(data[0]['method_name']);
                 $("#date1").text(date1.toLocaleString());
@@ -332,16 +332,17 @@
                 $("#total_imb2").text( parseInt(data[1]['total_imbalance_after_cut']) );
                 $("#cluster_no2").text(data[1]['island_imbalance_after_cut'].length);
 
-                $("#method3").text(data[2]['method_name']);
-                $("#date3").text(date3.toLocaleString());
-                $("#lines3").text(data[2]['lines_to_cut']);
-                $("#imb_after3").text(final_isl_imb3);
-                $("#total_imb3").text( parseInt(data[2]['total_imbalance_after_cut']) );
-                $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
+                // $("#method3").text(data[2]['method_name']);
+                // $("#date3").text(date3.toLocaleString());
+                // $("#lines3").text(data[2]['lines_to_cut']);
+                // $("#imb_after3").text(final_isl_imb3);
+                // $("#total_imb3").text( parseInt(data[2]['total_imbalance_after_cut']) );
+                // $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
                 
                 $("#islanding_min-cut").attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
                 $('#islanding_gap').attr("src", "{% static 'grid_after_islanding/grid_after_GAP.png' %}");
-                $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC.png' %}");
+                // $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC.png' %}");
+                $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
 			},
 			complete:function(data){
 			},

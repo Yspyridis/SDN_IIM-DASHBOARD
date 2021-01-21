@@ -14,6 +14,13 @@ import matplotlib.pyplot as plt
 # from utlize import simple_plotly_gen
 
 from pandapower.plotting.plotly import simple_plotly
+import sys
+# sys.path.append(os.path.abspath(os.path.join('/', 'iim_mlst')))
+sys.path.insert(0, './islanding/iim_mlst')
+
+import utlize
+# from islanding import iim_mlst as
+from utlize import simple_plotly_gen
 
 from django.core import serializers
 import pandas as pd
@@ -49,6 +56,7 @@ def islanding_plot(request):
     plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
     pp.plotting.to_html(net_after, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
+    simple_plotly_gen(net_after, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
     os.remove('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt')
     ###########################################################

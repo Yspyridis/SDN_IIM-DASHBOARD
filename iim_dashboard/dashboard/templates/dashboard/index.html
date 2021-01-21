@@ -266,6 +266,7 @@
 
     $(document).ready(function () {
 
+        postIslandingPlot();
         getIslandingPlot('GAP');
         getNumericalResults('GAP');
 
@@ -297,6 +298,34 @@
 
         getNumericalResults('OTSC');
     });
+
+    function postIslandingPlot() {
+
+        var json = $.getJSON({'url': "Case5_Ring_0_results.json", 'async': false});  
+
+        $.ajax({
+			// url:"{% url 'islanding:islanding_plot' %}",
+            url:"/islanding/islanding_result/",
+			type: "POST",
+			data: JSON.stringify(json),
+			success: function (data) {
+
+                console.log("gets in getIslandingPlot()");
+                // console.log(data);
+
+                
+
+  
+                },
+                complete:function(data){
+                },
+                error:function (xhr, textStatus, thrownError){
+                // alert("An error occured, please try again later.");
+                alert("Unexpected error, please try again later.");
+                }
+                });
+
+    }
 
     function getIslandingPlot(method) {
 

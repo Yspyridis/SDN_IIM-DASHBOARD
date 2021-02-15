@@ -53,34 +53,20 @@ from islanding.models import IslandingScheme
 from pandapower.plotting.plotly import simple_plotly
 
 # SET VARIABLES
-epochs  = 1000
-# epochs  = 2500
+# epochs  = 1000
+# epochs  = 4000
+epochs  = 10000
+# epochs  = 35000
 # kappa   = 2 
-kappa   = 3 
-# new_net = pp.from_json('test.json')
+# kappa   = 3 
+kappa   = 4 
+# kappa   = 5 
+# net = pp.from_json('test.json')
 
 # pp.diagnostic(new_net, report_style='detailed', warnings_only=False, return_result_dict=True, overload_scaling_factor=0.001, min_r_ohm=0.001, min_x_ohm=0.001, min_r_pu=1e-05, min_x_pu=1e-05, nom_voltage_tolerance=0.3, numba_tolerance=1e-05)
 
-print('#######################################')
+# print('#######################################')
 
-# ######### Get grid json and plot image of result ##########
-# mygrid = IslandingScheme.objects.filter(method_name='OTSC IIM').last().grid
-# fgrid = str(mygrid)
-# fgrid2 = '"{}"'.format(fgrid)
-
-# with open('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt', 'w') as f:
-#     f.write(mygrid)
-
-# print(fgrid)
-# print(fgrid2)
-# net_after = pp.from_json('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt')
-
-# pp.plotting.to_html(net_after, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_TEST.html', show_tables=False)
-# simple_plotly_gen(net_after, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_TEST.html')
-# # new_data = new_net['grid']
-
-# # new_net = json.dumps(new_data)
-# print(net_after)    
 
 # new_net = pp.networks.case14()
 # new_net = pp.networks.case_ieee30()
@@ -151,9 +137,35 @@ def euclidean_distances(x, all_vec):
 # net=pp.networks.case14()
 # net=pp.networks.case24_ieee_rts()
 # net=pp.networks.case30()
-net=pp.networks.case_ieee30()
-# net=pp.networks.case145()
+# net=pp.networks.case39()
+# net=pp.networks.case57()
+net=pp.networks.case89pegase()
+# net=pp.networks.case_ieee30()
 
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+
+# net=pp.networks.case118()
+# net=pp.networks.case_illinois200()
+# net=pp.networks.case300()
+
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+
+
+# net=pp.networks.case145()
+print('#######################################')
+print('#######################################')
+print(net)
+# pp.estimation.estimate(net, algorithm='wls', init='flat', tolerance=1e-06, maximum_iterations=10, calculate_voltage_angles=True, zero_injection='aux_bus', fuse_buses_with_bb_switch='all', **opt_vars)
+print('#######################################')
+print('#######################################')
 # ########## Save binary, json, excel pandapower network file ##########
 # pp.to_pickle(net, "case14.json")
 # pp.to_pickle(net, "case14.p")
@@ -200,7 +212,7 @@ args = parser.parse_args()
 
 # k=2
 # num_epoch=500   #number of training time
-# num_epoch=1000   #number of training time
+# num_epoch=3000   #number of training time
 num_epoch=epochs   #number of training time
 
 def search_1d(a,lines):
@@ -216,7 +228,7 @@ def search_1d(a,lines):
     return count,result_search
 #panpower powerflow
 pp.runpp(net)
-print(pp.runpp(net))
+# print(pp.runpp(net))
 
 
 case_num=len(net.res_bus)
@@ -413,7 +425,7 @@ with tqdm(total=num_epoch) as tq:
 output_predict=torch.argmax(X_hat,dim=1)
 output_predict=output_predict.cpu().numpy()
 # generator_results=output_predict[gen_index]
-print(gen_index)
+# print(gen_index)
 
 #part- evaluation
 
@@ -423,16 +435,16 @@ total_imbalance_initial = 0
 # lines = 0
 ##
 
-print('|###########################################|')
+# print('|###########################################|')
 
-print(type(X_hat))
-print(X_hat)
-print(type(output_predict))
-print(output_predict)
-print(type(bus_inc))
-print(bus_inc)
+# print(type(X_hat))
+# print(X_hat)
+# print(type(output_predict))
+# print(output_predict)
+# print(type(bus_inc))
+# print(bus_inc)
 
-print('|###########################################|')
+# print('|###########################################|')
 
 sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
 for i in range(len(island_inc)):
@@ -621,15 +633,20 @@ lines = number_lines
 pp.runpp(net)
 #plot the result with generator
 # simple_plotly_gen(net,file_name=save_fig_path+'/temp-plot.html')
+# print('#######################################')
 # print(net.res_bus)
-
+# print('#######################################')
 # print('powerflow is', pp.runpp(net, algorithm='nr', calculate_voltage_angles='auto', init='auto', max_iteration='auto', tolerance_mva=1e-08, trafo_model='t', trafo_loading='current', enforce_q_lims=False, check_connectivity=True, voltage_depend_loads=True, consider_line_temperature=False) )
 # print('dc powerflow is', pp.rundcpp(net, trafo_model='t', trafo_loading='current', recycle=None, check_connectivity=True, switch_rx_ratio=2, trafo3w_losses='hv'))
 
 # HERE
 # print(island_imbalance_after)
 pp.runpp(net)
-print(pp.runpp(net))
+
+# print('#######################################')
+# print('#######################################')
+# print(pp.runpp(net))
+# print('#######################################')
 
 jnet=pp.to_json(net, filename=None, encryption_key=None)
 method='GAP'
@@ -640,7 +657,7 @@ pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.
 plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
 #################### END GAP METHOD ####################
 
@@ -653,8 +670,30 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 # net=pp.networks.case14()
 # net=pp.networks.case24_ieee_rts()
 # net=pp.networks.case30()
-net=pp.networks.case_ieee30()
+# net=pp.networks.case39()
+# net=pp.networks.case57()
+net=pp.networks.case89pegase()
+# net=pp.networks.case_ieee30()
+
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+
+# net=pp.networks.case118()
+# net=pp.networks.case_illinois200()
+# net=pp.networks.case300()
+
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+
 # net=pp.networks.case145()
+
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='wine', help='Dataset to use')
@@ -667,6 +706,7 @@ parser.add_argument('-epoch', type=int, default=200, help='Number of Training Ep
 parser.add_argument('-device', type=str, default='cpu', help='Train on GPU or CPU')
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda')
 args = parser.parse_args()
 
 
@@ -674,7 +714,7 @@ args = parser.parse_args()
 
 # num_epoch=500   #number of training time
 num_epoch=epochs   #number of training time
-# num_epoch=2500   #number of training time
+# num_epoch=4500   #number of training time
 
 def search_1d(a,lines):
     """find the corresponding index that a=lines[i]"""
@@ -1100,7 +1140,7 @@ pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.
 plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html') 
 
 #################### END MIN-CUT METHOD ####################
 

@@ -305,44 +305,65 @@
 				
 				var d1 = data[0]['date'];
 				var d2 = data[1]['date'];
-				var d3 = data[2]['date'];
+				// var d3 = data[2]['date'];
 
-				date1 = new Date(d1);
-				date2 = new Date(d2);
-				date3 = new Date(d3);
+				var date1 = new Date(d1);
+				var date2 = new Date(d2);
+                // var date3 = new Date(d3);
 
-                var island_imbalance1 = data[0]['island_imbalance_after_cut'].toString();
+                var island_imbalance1 = data[0]['island_imbalance_after_cut'];
+                var island_imbalance2 = data[1]['island_imbalance_after_cut'];
+                // var island_imbalance3 = data[2]['island_imbalance_after_cut'];
+
+                // cut decimals from the array
+                var x = 0;
+                // var len = 4;
+                var len = island_imbalance1.length;
+                
+                while(x < len) { 
+                    // if(x !=2) {
+                        island_imbalance1[x] = (island_imbalance1[x]).toFixed(2); 
+                        island_imbalance2[x] = (island_imbalance2[x]).toFixed(2); 
+                    // }
+                    // island_imbalance2[x] = (island_imbalance2[x]).toFixed(2); 
+                    // island_imbalance3[x] = (island_imbalance3[x]).toFixed(2); 
+                    x++;
+                }
+
+                // convert to string to replace commas with |
+                island_imbalance1  = island_imbalance1.toString();   
+                island_imbalance2  = island_imbalance2.toString();   
+                // island_imbalance3  = island_imbalance3.toString();  
+                
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
-                var island_imbalance2 = data[1]['island_imbalance_after_cut'].toString();
                 var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
-                var island_imbalance3= data[2]['island_imbalance_after_cut'].toString();
-                var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+                // var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 $("#method1").text(data[0]['method_name']);
                 $("#date1").text(date1.toLocaleString());
                 $("#lines1").text(data[0]['lines_to_cut']);
                 $("#imb_after1").text(final_isl_imb1);
-                $("#total_imb1").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                $("#total_imb1").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
                 $("#cluster_no1").text(data[0]['island_imbalance_after_cut'].length);
 
                 $("#method2").text(data[1]['method_name']);
                 $("#date2").text(date2.toLocaleString());
                 $("#lines2").text(data[1]['lines_to_cut']);
                 $("#imb_after2").text(final_isl_imb2);
-                $("#total_imb2").text( parseInt(data[1]['total_imbalance_after_cut']) );
+                $("#total_imb2").text( (data[1]['total_imbalance_after_cut']*(-1)).toFixed(2) );
                 $("#cluster_no2").text(data[1]['island_imbalance_after_cut'].length);
 
                 // UNCOMMENT FOR THREE METHODS
-                $("#method3").text(data[2]['method_name']);
-                $("#date3").text(date3.toLocaleString());
-                $("#lines3").text(data[2]['lines_to_cut']);
-                $("#imb_after3").text(final_isl_imb3);
-                $("#total_imb3").text( parseInt(data[2]['total_imbalance_after_cut']) );
-                $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
+                // $("#method3").text(data[2]['method_name']);
+                // $("#date3").text(date3.toLocaleString());
+                // $("#lines3").text(data[2]['lines_to_cut']);
+                // $("#imb_after3").text(final_isl_imb3);
+                // $("#total_imb3").text( (data[2]['total_imbalance_after_cut']*(-1)).toFixed(2) );
+                // $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
                 
-                $("#islanding_min-cut").attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
-                $('#islanding_gap').attr("src", "{% static 'grid_after_islanding/grid_after_GAP.png' %}");
-                $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}");
+                // $("#islanding_min-cut").attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
+                // $('#islanding_gap').attr("src", "{% static 'grid_after_islanding/grid_after_GAP.png' %}");
+                // $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}");
 			},
 			complete:function(data){
 			},

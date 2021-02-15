@@ -56,6 +56,7 @@ def islanding_plot(request):
     plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
     pp.plotting.to_html(net_after, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
+    # comment the line below to stop annoying popup with html plot
     # simple_plotly_gen(net_after, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
     os.remove('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt')
@@ -79,7 +80,8 @@ def islanding_result(request):
         # Now query the results without the grid
         # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
         # results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
-        results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:3].values(*fields)
+        # results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:3].values(*fields)
+        results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:2].values(*fields)
         # print('the results are ')
         # print(results)
         df = pd.DataFrame(data=results)
@@ -106,12 +108,15 @@ def islanding_result(request):
     
         # Now query the results without the grid
         # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
-        results = IslandingScheme.objects.all().order_by('-id')[:3].values(*fields)
+        results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
+        # results = IslandingScheme.objects.all().order_by('-id')[:3].values(*fields)
         # results = IslandingScheme.objects.filter(date__contains=request_date).values(*fields)
         # print('the results are ')
         # print(results)
         df = pd.DataFrame(data=results)
         response_json = df.to_json(orient='records')
+        print('sending the following json to front')
+        print(response_json)
         ############################################################   
         
         return HttpResponse(response_json, content_type='application/json')

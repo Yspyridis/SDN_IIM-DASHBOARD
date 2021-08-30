@@ -10,17 +10,17 @@ import pandapower as pp
 import pandapower.plotting as plot
 import matplotlib.pyplot as plt
 
-# import utlize
-# from utlize import simple_plotly_gen
+# import utilities
+# from utilities import simple_plotly_gen
 
 from pandapower.plotting.plotly import simple_plotly
 import sys
 # sys.path.append(os.path.abspath(os.path.join('/', 'iim_mlst')))
 sys.path.insert(0, './islanding/iim_mlst')
 
-import utlize
+import utilities
 # from islanding import iim_mlst as
-from utlize import simple_plotly_gen
+from utilities import simple_plotly_gen
 
 from django.core import serializers
 import pandas as pd

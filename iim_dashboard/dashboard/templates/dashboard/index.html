@@ -272,6 +272,9 @@
 
         $("#grid_initial_1").attr("src", "");
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
+
+        url0= "{% static 'grid_after_islanding/initial2.html' %}"
+        $('#interactive_plot').load(url0);
     });
 
 
@@ -355,7 +358,7 @@
                 }
 
                 $("#grid_after").attr("src", url);
-                $('#interactive_plot').load(url2);
+                // $('#interactive_plot').load(url2);
                 $('#interactive_plot2').load(url3);
             },
 			complete:function(data){

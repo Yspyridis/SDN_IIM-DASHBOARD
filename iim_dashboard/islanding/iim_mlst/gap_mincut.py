@@ -98,7 +98,7 @@ def euclidean_distances(x, all_vec):
 # replace with AIDB connection ##################################################
 
 # get AIDB token ##################################################
-conn = http.client.HTTPSConnection("apiprod.gridpilot.tech", 8085)
+conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
 payload = 'username=0INF.UC0&password=0INFUC0&grant_type=password'
 headers = {
   'Content-Type': 'application/x-www-form-urlencoded',
@@ -107,14 +107,14 @@ headers = {
 conn.request("POST", "/oauth/token", payload, headers)
 res = conn.getresponse()
 data = res.read()
-# print(data.decode("utf-8"))
+print(data.decode("utf-8"))
 aidb_token = data.decode("utf-8")
 
 input("Token received. Press enter to continue...")
 ###################################################################
 
 # get AIDB asset ##################################################
-conn = http.client.HTTPSConnection("apiprod.gridpilot.tech", 8085)
+conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
 payload = ''
 headers = {
   'Content-Type': 'application/json',

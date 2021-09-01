@@ -27,6 +27,9 @@ except:
 from utilities import simple_plotly_gen
 import json
 import sys
+
+import http.client
+
 startingDir = os.getcwd() # save our current directory
 
 # project path through relative path, parent(parent(current_directory))
@@ -94,6 +97,36 @@ def euclidean_distances(x, all_vec):
 ########################### load grid model #####################################
 # replace with AIDB connection ##################################################
 
+# get AIDB token ##################################################
+conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+payload = 'username=0INF.UC0&password=0INFUC0&grant_type=password'
+headers = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
+}
+conn.request("POST", "/oauth/token", payload, headers)
+res = conn.getresponse()
+data = res.read()
+print(data.decode("utf-8"))
+aidb_token = data.decode("utf-8")
+
+input("Token received. Press enter to continue...")
+###################################################################
+
+# get AIDB asset ##################################################
+conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+payload = ''
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': aidb_token
+}
+conn.request("GET", "/assetInventory/search?invExternalId=0000000000000001&installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
+res = conn.getresponse()
+data = res.read()
+# print(data.decode("utf-8"))
+###################################################################
+
+# manual grid model
 net=pp.networks.case_ieee30()
 
 pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)

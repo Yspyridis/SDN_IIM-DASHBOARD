@@ -34,6 +34,18 @@ createuser -P iim
 createdb -O iim iimdb
 ```
 
+Setup the database (for Centos8):
+```
+sudo dnf module enable postgresql:12
+sudo dnf install postgresql-server
+sudo postgresql-setup --initdb
+sudo nano /var/lib/pgsql/data/pg_hba.conf -> change ident to md5 on ipv4 and ipv6
+sudo systemctl start postgresql
+sudo -i -u postgres
+createuser -P iim -> sdniim as passwd
+createdb -O iim iimdb
+```
+
 Migrate the project:
 ```
 python3 manage.py makemigrations

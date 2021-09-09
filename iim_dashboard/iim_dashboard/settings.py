@@ -64,7 +64,8 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
+    # 'http://localhost:8000',
+    '*',
 )
 
 ROOT_URLCONF = 'iim_dashboard.urls'

@@ -28,8 +28,8 @@ SECRET_KEY = '((06qd(5c0*=5()*hjn+iqesz)3man#u9x)x^i3m9o93i2)ikk'
 DEBUG = False
 
 # The first IP is to check API on local network and should be removed
-ALLOWED_HOSTS = ['mlst-iim-server.eurodyn.com', '10.250.100.60', '192.168.1.161', '192.168.1.150','localhost', '127.0.0.1']
-# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['mlst-iim-server.eurodyn.com', '10.250.100.60', '192.168.1.161', '192.168.1.150','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

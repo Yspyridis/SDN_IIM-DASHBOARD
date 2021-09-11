@@ -112,7 +112,8 @@ DATABASES = {
         'NAME': 'iimdb',
         'USER': 'iim',
         'PASSWORD': 'sdniim',
-        'HOST': 'localhost',
+        # 'HOST': 'localhost',
+        'HOST': 'mlst-iim-server.eurodyn.com',
         'PORT': ''
     }
 }

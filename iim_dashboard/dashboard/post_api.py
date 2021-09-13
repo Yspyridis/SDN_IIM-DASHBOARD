@@ -8,7 +8,8 @@ class IIMAPI():
 		'Content-Type': 'application/json',
 	}
 	# change this
-	URI = "http://localhost:8000"
+	# URI = "http://localhost:8000"
+	URI = "mlst-iim-server.eurodyn.com:80"
 
 	def __init__(self, username, password):
 		print("[+] Initializing credentials")

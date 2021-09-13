@@ -25,8 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # The first IP is to check API on local network and should be removed
 # ALLOWED_HOSTS = ['mlst-iim-server.eurodyn.com', '10.250.100.60', '192.168.1.161', '192.168.1.150','localhost', '127.0.0.1']
@@ -109,9 +109,9 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         # 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': 'iimdb',
-        'USER': 'iim',
-        'PASSWORD': 'sdniim',
+        'NAME': os.environ['IIM_DB'],
+        'USER': os.environ['IIM_DB_USER'],
+        'PASSWORD': os.environ['IIM_DB_PASS'],
         # 'HOST': 'localhost',
         'HOST': 'mlst-iim-server.eurodyn.com',
         'PORT': ''
@@ -157,10 +157,10 @@ LOGIN_REDIRECT_URL = 'dashboard:index'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT=os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT=os.path.join(BASE_DIR, '..dashboard/static/')
 
-# MEDIA_URL='/media/'
-# MEDIA_ROOT=os.path.join(BASE_DIR, 'media/')
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR, 'media/')
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'dashboard/static/'),

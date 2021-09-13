@@ -116,8 +116,8 @@ DATABASES = {
         'NAME': os.environ['IIM_DB'],
         'USER': os.environ['IIM_DB_USER'],
         'PASSWORD': os.environ['IIM_DB_PASS'],
-        # 'HOST': 'localhost',
-        'HOST': 'mlst-iim-server.eurodyn.com',
+        'HOST': 'localhost',
+        # 'HOST': 'mlst-iim-server.eurodyn.com',
         'PORT': ''
     }
 }

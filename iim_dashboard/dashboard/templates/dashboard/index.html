@@ -384,15 +384,15 @@
 				
 				var d1 = data[0]['date'];
 				var d2 = data[1]['date'];
-				// var d3 = data[2]['date'];
+				var d3 = data[2]['date'];
 
 				var date1 = new Date(d1);
 				var date2 = new Date(d2);
-                // var date3 = new Date(d3);
+                var date3 = new Date(d3);
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'];
                 var island_imbalance2 = data[1]['island_imbalance_after_cut'];
-                // var island_imbalance3 = data[2]['island_imbalance_after_cut'];
+                var island_imbalance3 = data[2]['island_imbalance_after_cut'];
 
                 // cut decimals from the array
                 var x = 0;
@@ -412,11 +412,11 @@
                 // convert to string to replace commas with |
                 island_imbalance1  = island_imbalance1.toString();   
                 island_imbalance2  = island_imbalance2.toString();   
-                // island_imbalance3  = island_imbalance3.toString();  
+                island_imbalance3  = island_imbalance3.toString();  
                 
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
                 var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
-                // var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+                var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 // console.log(data);
 

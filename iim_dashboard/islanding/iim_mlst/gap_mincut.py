@@ -98,31 +98,31 @@ def euclidean_distances(x, all_vec):
 # replace with AIDB connection ##################################################
 
 # get AIDB token ##################################################
-conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-payload = 'username=0INF.UC0&password=0INFUC0&grant_type=password'
-headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
-}
-conn.request("POST", "/oauth/token", payload, headers)
-res = conn.getresponse()
-data = res.read()
-print(data.decode("utf-8"))
-aidb_token = data.decode("utf-8")
+# conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+# payload = 'username=0INF.UC0&password=0INFUC0&grant_type=password'
+# headers = {
+#   'Content-Type': 'application/x-www-form-urlencoded',
+#   'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
+# }
+# conn.request("POST", "/oauth/token", payload, headers)
+# res = conn.getresponse()
+# data = res.read()
+# print(data.decode("utf-8"))
+# aidb_token = data.decode("utf-8")
 
-input("Token received. Press enter to continue...")
+# input("Token received. Press enter to continue...")
 ###################################################################
 
 # get AIDB asset ##################################################
-conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-payload = ''
-headers = {
-  'Content-Type': 'application/json',
-  'Authorization': aidb_token
-}
-conn.request("GET", "/assetInventory/search?invExternalId=0000000000000001&installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
-res = conn.getresponse()
-data = res.read()
+# conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+# payload = ''
+# headers = {
+#   'Content-Type': 'application/json',
+#   'Authorization': aidb_token
+# }
+# conn.request("GET", "/assetInventory/search?invExternalId=0000000000000001&installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
+# res = conn.getresponse()
+# data = res.read()
 # print(data.decode("utf-8"))
 ###################################################################
 

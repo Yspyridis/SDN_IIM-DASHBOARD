@@ -29,6 +29,7 @@ import json
 import sys
 
 import http.client
+import pika
 
 startingDir = os.getcwd() # save our current directory
 

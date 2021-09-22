@@ -696,6 +696,24 @@ plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
 simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
+
+########################### connect ro rabbitmq AIDB gridpilot #########################
+# url = os.environ.get('GRIDPILOT_URL', 'https://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+# parameters = pika.URLParameters(url)
+credentials = pika.PlainCredentials('iim-guest', 'iimguesst')
+parameters = pika.ConnectionParameters('https://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+connection = pika.BlockingConnection(parameters)
+
+channel = connection.channel()
+channel.queue_declare(queue='mlst_iim')
+
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='', body = json.dumps(jnet))
+
+print(" [x] Sent 'Hello islanding scheme!'")
+connection.close()
+
+
+
 print('END OF MIN-CUT METHOD')
 print('#######################################')
 print('#######################################')

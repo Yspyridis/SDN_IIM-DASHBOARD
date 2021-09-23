@@ -710,7 +710,7 @@ channel.queue_declare(queue='mlst_iim')
 
 channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='', body = json.dumps(jnet))
 
-print(" [x] Sent 'Hello islanding scheme!'")
+print(" [x] Sent 'Islanding scheme!'")
 connection.close()
 
 

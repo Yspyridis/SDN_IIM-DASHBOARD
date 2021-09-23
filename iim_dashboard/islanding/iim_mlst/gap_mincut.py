@@ -699,7 +699,8 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 
 ########################### connect ro rabbitmq AIDB gridpilot #########################
-url = os.environ.get('GRIDPILOT_URL', 'https://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+# url = os.environ.get('GRIDPILOT_URL', 'https://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+url = os.environ.get('GRIDPILOT_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
 parameters = pika.URLParameters(url)
 credentials = pika.PlainCredentials('iim-guest', 'iimguest')
 # parameters = pika.ConnectionParameters('http://3.120.35.154', 5672, 'iim', credentials)

@@ -708,7 +708,7 @@ connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='mlst_iim')
 
-channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='', body = json.dumps(jnet))
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='mlst_iim', body = json.dumps(jnet))
 
 print(" [x] Sent 'Islanding scheme!'")
 connection.close()

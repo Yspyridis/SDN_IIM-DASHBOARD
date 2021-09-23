@@ -702,7 +702,7 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 # url = os.environ.get('GRIDPILOT_URL', 'https://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
 # parameters = pika.URLParameters(url)
 credentials = pika.PlainCredentials('iim-guest', 'iimguesst')
-parameters = pika.ConnectionParameters('http://3.120.35.154:5672', 'iim', credentials)
+parameters = pika.ConnectionParameters('http://3.120.35.154', 5672, 'iim', credentials)
 connection = pika.BlockingConnection(parameters)
 
 channel = connection.channel()

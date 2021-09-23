@@ -52,7 +52,7 @@ from pandapower.plotting.plotly import simple_plotly
 
 # training epochs
 #################### training epochs ####################
-epochs  = 1000
+epochs  = 100
 #########################################################
 
 #################### number of clusters #################
@@ -699,23 +699,35 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 
 ########################### connect ro rabbitmq AIDB gridpilot #########################
-# url = os.environ.get('GRIDPILOT_URL', 'https://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
-url = os.environ.get('GRIDPILOT_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
-parameters = pika.URLParameters(url)
-credentials = pika.PlainCredentials('iim-guest', 'iimguest')
-# parameters = pika.ConnectionParameters('http://3.120.35.154', 5672, 'iim', credentials)
-# parameters = pika.ConnectionParameters('http://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-connection = pika.BlockingConnection(parameters)
+# # url = os.environ.get('GRIDPILOT_URL', 'https://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+# # url = os.environ.get('GRIDPILOT_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
+# url = os.environ.get('GRIDPILOT_URL', 'amqps://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+# parameters = pika.URLParameters(url)
+# credentials = pika.PlainCredentials('iim-guest', 'iimguest')
+# # parameters = pika.ConnectionParameters('http://3.120.35.154', 5672, 'iim', credentials)
+# # parameters = pika.ConnectionParameters('http://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+# connection = pika.BlockingConnection(parameters)
 
-channel = connection.channel()
-channel.queue_declare(queue='mlst_iim')
+# channel = connection.channel()
+# channel.queue_declare(queue='mlst_iim')
 
-channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='mlst_iim', body = json.dumps(jnet))
+# channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='mlst_iim', body = json.dumps(jnet))
 
-print(" [x] Sent 'Islanding scheme!'")
+# print(" [x] Sent 'Islanding scheme!'")
+# connection.close()
+
+
+url = os.environ.get('CLOUDAMQP_URL', 'amqps://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+params = pika.URLParameters(url)
+connection = pika.BlockingConnection(params)
+channel = connection.channel() # start a channel
+channel.queue_declare(queue='mlst_iim') # Declare a queue
+channel.basic_publish(exchange='',
+                      routing_key='mlst_iim',
+                      body='test')
+
+print(" [x] Sent test")
 connection.close()
-
-
 
 print('END OF MIN-CUT METHOD')
 print('#######################################')

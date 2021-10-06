@@ -712,8 +712,9 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 # print(" [x] Sent 'Islanding scheme!'")
 # connection.close()
 
-
-url = os.environ.get('CLOUDAMQP_URL', 'amqps://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+print(" [x] Trying rabbitmq")
+# url = os.environ.get('CLOUDAMQP_URL', 'amqps://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
 params = pika.URLParameters(url)
 connection = pika.BlockingConnection(params)
 channel = connection.channel()

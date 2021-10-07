@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url, include
+from . import views
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    url('^$', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('dashboard', include('dashboard.urls')),
     path('islanding', include('islanding.urls')),

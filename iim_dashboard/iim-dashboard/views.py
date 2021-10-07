@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
 
     context = {
-    'app_name': "dashboard",
+    'app_name': "iim-dashboard",
     }
     template = loader.get_template('dashboard/index.html')
     return HttpResponse(template.render(context, request))
@@ -18,9 +18,9 @@ def index(request):
 def compare(request):
 
     context = {
-    'app_name': "dashboard",
+    'app_name': "iim-dashboard",
     'page_name': "compare",
     }
-    template = loader.get_template('dashboard/compare.html')
+    template = loader.get_template('iim-dashboard/compare.html')
     return HttpResponse(template.render(context, request))
     

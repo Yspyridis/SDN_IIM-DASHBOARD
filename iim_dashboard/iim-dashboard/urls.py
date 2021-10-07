@@ -4,7 +4,7 @@ from django.views.generic import RedirectView
 
 # from django.urls import path
 
-app_name = 'dashboard'
+app_name = 'iim-dashboard'
 
 urlpatterns = [
     url('^$', views.index, name='index'),

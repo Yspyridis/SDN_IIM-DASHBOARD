@@ -699,32 +699,32 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 
 ########################## connect ro rabbitmq AIDB gridpilot #########################
-# credentials = pika.PlainCredentials('iim-guest', 'iimguest')
-# # parameters = pika.ConnectionParameters('http://3.120.35.154', 5672, 'iim', credentials)
-# parameters = pika.ConnectionParameters('http://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-# connection = pika.BlockingConnection(parameters)
+credentials = pika.PlainCredentials('iim-guest', 'iimguest')
+# parameters = pika.ConnectionParameters('http://3.120.35.154', 5672, 'iim', credentials)
+parameters = pika.ConnectionParameters('https://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+connection = pika.BlockingConnection(parameters)
 
-# channel = connection.channel()
-# channel.queue_declare(queue='mlst_iim')
-
-# channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='mlst_iim', body = json.dumps(jnet))
-
-# print(" [x] Sent 'Islanding scheme!'")
-# connection.close()
-
-print(" [x] Trying rabbitmq")
-# url = os.environ.get('CLOUDAMQP_URL', 'amqps://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
-url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
-params = pika.URLParameters(url)
-connection = pika.BlockingConnection(params)
 channel = connection.channel()
 channel.queue_declare(queue='mlst_iim')
-channel.basic_publish(exchange='',
-                      routing_key='mlst_iim',
-                      body='test')
 
-print(" [x] Sent test")
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='mlst_iim', body = json.dumps(jnet))
+
+print(" [x] Sent 'Islanding scheme!'")
 connection.close()
+
+# print(" [x] Trying rabbitmq")
+# # url = os.environ.get('CLOUDAMQP_URL', 'amqps://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
+# url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
+# params = pika.URLParameters(url)
+# connection = pika.BlockingConnection(params)
+# channel = connection.channel()
+# channel.queue_declare(queue='mlst_iim')
+# channel.basic_publish(exchange='',
+#                       routing_key='mlst_iim',
+#                       body='test')
+
+# print(" [x] Sent test")
+# connection.close()
 
 print('END OF MIN-CUT METHOD')
 print('#######################################')

@@ -1,5 +1,5 @@
-[![GitHub issues](https://img.shields.io/github/issues/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD/issues)
-[![GitHub license](https://img.shields.io/github/license/Yspyridis/SDN_IIM-DASHBOARD)](https://github.com/Yspyridis/SDN_IIM-DASHBOARD)
+[![GitHub issues](https://img.shields.io/github/issues/Yspyridis/SDN_dashboard_iim)](https://github.com/Yspyridis/SDN_dashboard_iim/issues)
+[![GitHub license](https://img.shields.io/github/license/Yspyridis/SDN_dashboard_iim)](https://github.com/Yspyridis/SDN_dashboard_iim)
 
 
 # IIM Dashboard
@@ -13,7 +13,7 @@ With the instructions below, you can setup the project on a local machine for te
 Clone the repository and create a Python virtual environment:
 
 ```
-git clone https://github.com/Yspyridis/SDN_IIM-DASHBOARD.git
+git clone https://github.com/Yspyridis/SDN_dashboard_iim.git
 python3 -m venv venv
 ```
 

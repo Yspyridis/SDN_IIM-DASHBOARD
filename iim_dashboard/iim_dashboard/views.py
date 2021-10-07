@@ -11,7 +11,7 @@ def index(request):
     context = {
     'app_name': "iim_dashboard",
     }
-    template = loader.get_template('iim-dashboard/index.html')
+    template = loader.get_template('dashboard_iim/index.html')
     return HttpResponse(template.render(context, request))
 
 # @login_required

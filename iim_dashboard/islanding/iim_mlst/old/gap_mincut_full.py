@@ -99,9 +99,9 @@ net=pp.networks.case_ieee30()
 # test_file_path='C:/Users/70474/Desktop/meeting_phd/project_va/GridModels_examples/CIGRE_MV_modified.json'
 # net= pp.from_json(test_file_path)
 
-# net = pp.from_json('/home/yannis/Documents/Code/IIM_Dashboard/SDN_IIM-DASHBOARD/iim_dashboard/CaseIEEE9_GridModel.json')
-# net = pp.from_json('/home/yannis/Documents/Code/IIM_Dashboard/SDN_IIM-DASHBOARD/iim_dashboard/MV_CIGRE_GridModel.json')
-# net = pp.from_json('/home/yannis/Documents/Code/IIM_Dashboard/SDN_IIM-DASHBOARD/iim_dashboard/MV_Oberrhein_GridModelv2.json')
+# net = pp.from_json('/home/yannis/Documents/Code/IIM_Dashboard/SDN_dashboard_iim/iim_dashboard/CaseIEEE9_GridModel.json')
+# net = pp.from_json('/home/yannis/Documents/Code/IIM_Dashboard/SDN_dashboard_iim/iim_dashboard/MV_CIGRE_GridModel.json')
+# net = pp.from_json('/home/yannis/Documents/Code/IIM_Dashboard/SDN_dashboard_iim/iim_dashboard/MV_Oberrhein_GridModelv2.json')
 
 # print('pp.rundcpp(net)')
 # print(pp.rundcpp(net))

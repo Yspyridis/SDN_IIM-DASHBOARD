@@ -10,6 +10,7 @@ def index(request):
 
     context = {
     'app_name': "dashboard_iim",
+    'page_name': "home",
     }
     template = loader.get_template('dashboard/index.html')
     return HttpResponse(template.render(context, request))
@@ -21,6 +22,6 @@ def compare(request):
     'app_name': "dashboard_iim",
     'page_name': "compare",
     }
-    template = loader.get_template('dashboard_iim/compare.html')
+    template = loader.get_template('dashboard/compare.html')
     return HttpResponse(template.render(context, request))
     

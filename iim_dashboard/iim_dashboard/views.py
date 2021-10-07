@@ -9,9 +9,9 @@ from django.contrib.auth.decorators import login_required
 def index(request):
 
     context = {
-    'app_name': "iim_dashboard",
+    'app_name': "dashboard_iim",
     }
-    template = loader.get_template('dashboard_iim/index.html')
+    template = loader.get_template('dashboard/index.html')
     return HttpResponse(template.render(context, request))
 
 # @login_required

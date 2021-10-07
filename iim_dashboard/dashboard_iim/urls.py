@@ -7,9 +7,9 @@ from django.views.generic import RedirectView
 app_name = 'dashboard_iim'
 
 urlpatterns = [
-    url('^$', views.index, name='index'),
-    url(r'^favicon\.ico$',RedirectView.as_view(url='/static/assets/favicon.ico')),
-
+    # url('^$', views.index, name='index'),
+    url('/home', views.index, name='index'),
     url('/compare', views.compare, name='compare'),
+    url(r'^favicon\.ico$',RedirectView.as_view(url='/static/assets/favicon.ico')),
 ]
  

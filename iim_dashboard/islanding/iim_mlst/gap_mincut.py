@@ -699,10 +699,19 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 
 ########################## connect ro rabbitmq AIDB gridpilot #########################
+
+
+# CHECK CODE IN DESKTOP (PYTHON RMQ PROJECT)
+
+# socket.gaierror: [Errno -2] Name or service not known
+
+
+
+
 credentials = pika.PlainCredentials('iim-guest', 'iimguest')
-parameters = pika.ConnectionParameters('https://3.120.35.154', 5672, 'iim', credentials)
+# parameters = pika.ConnectionParameters('https://3.120.35.154', 5672, 'iim', credentials)
 # parameters = pika.ConnectionParameters('https://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-# parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
 connection = pika.BlockingConnection(parameters)
 
 channel = connection.channel()

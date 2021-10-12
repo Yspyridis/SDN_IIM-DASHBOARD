@@ -705,7 +705,7 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 # socket.gaierror: [Errno -2] Name or service not known
 
-
+# raise self._reap_last_connection_workflow_error(error) pika.exceptions.AMQPConnectionError
 
 
 credentials = pika.PlainCredentials('iim-guest', 'iimguest')

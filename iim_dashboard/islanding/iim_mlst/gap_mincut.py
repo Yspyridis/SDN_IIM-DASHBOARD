@@ -711,7 +711,7 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 credentials = pika.PlainCredentials('iim-guest', 'iimguest')
 # parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
 # parameters = pika.ConnectionParameters('https://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-parameters = pika.ConnectionParameters('amqps://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+parameters = pika.ConnectionParameters('amqp://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
 connection = pika.BlockingConnection(parameters)
 
 channel = connection.channel()

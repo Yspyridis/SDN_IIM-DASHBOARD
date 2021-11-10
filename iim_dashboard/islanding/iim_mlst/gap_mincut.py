@@ -30,6 +30,11 @@ import sys
 
 import http.client
 import pika
+import uuid
+
+from datetime import timezone
+import datetime
+
 
 startingDir = os.getcwd() # save our current directory
 
@@ -58,6 +63,23 @@ epochs  = 100
 #################### number of clusters #################
 kappa   = 4 
 #########################################################
+
+
+#################### rmq json format ####################
+rmq_json = {
+    "messageId": "",
+    "name": "islanding_result",
+    "payload": {
+        "data": "",
+        "timestamp": ""
+    },
+    "payloadType": "Payload",
+    "source": "PublisherWithPipeline",
+    "uc": "UC1",
+    "utcTimestamp": ""
+}
+#########################################################
+
 
 # START
 
@@ -697,44 +719,33 @@ plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
 simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
+########################### create result json ########################################
+
+# print(jnet)
+
+rmq_json['messageId']            = uuid.uuid4()
+rmq_json['payload']['data']      = jnet
+rmq_json['payload']['timestamp'] = datetime.datetime.now()
+rmq_json['utcTimestamp']         = datetime.datetime.now(timezone.utc)
+
+# print(rmq_json)
+# input("Press enter to continue...")
 
 ########################## connect ro rabbitmq AIDB gridpilot #########################
-
-
-# CHECK CODE IN DESKTOP (PYTHON RMQ PROJECT)
-
-# socket.gaierror: [Errno -2] Name or service not known
-
-# raise self._reap_last_connection_workflow_error(error) pika.exceptions.AMQPConnectionError
-
 
 credentials = pika.PlainCredentials('iim-guest', 'iimguest')
 # parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
 parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-# parameters = pika.ConnectionParameters('amqp://rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
 connection = pika.BlockingConnection(parameters)
 
 channel = connection.channel()
-channel.queue_declare(queue='mlst_iim')
+channel.queue_declare(queue='IIM#IIM')
 
-channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='mlst_iim', body = json.dumps(jnet))
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
 
 print(" [x] Sent 'Islanding scheme!'")
 connection.close()
 
-# print(" [x] Trying rabbitmq")
-# # url = os.environ.get('CLOUDAMQP_URL', 'amqps://coutnokt:jEnlflPjI8UZVnRJ41wB8aiyr-cSIxir@cow.rmq2.cloudamqp.com/coutnokt')
-# url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
-# params = pika.URLParameters(url)
-# connection = pika.BlockingConnection(params)
-# channel = connection.channel()
-# channel.queue_declare(queue='mlst_iim')
-# channel.basic_publish(exchange='',
-#                       routing_key='mlst_iim',
-#                       body='test')
-
-# print(" [x] Sent test")
-# connection.close()
 
 print('END OF MIN-CUT METHOD')
 print('#######################################')

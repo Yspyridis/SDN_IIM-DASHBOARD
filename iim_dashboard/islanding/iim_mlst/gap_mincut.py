@@ -121,7 +121,7 @@ def euclidean_distances(x, all_vec):
 
 # get AIDB token ##################################################
 conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-payload = 'username=0INF.UC0&password=0INFUC0&grant_type=password'
+payload = 'username=0INF.UC1&password=0INFUC1&grant_type=password'
 headers = {
   'Content-Type': 'application/x-www-form-urlencoded',
   'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='

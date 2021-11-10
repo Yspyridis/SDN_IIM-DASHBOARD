@@ -120,34 +120,34 @@ def euclidean_distances(x, all_vec):
 ########################### load grid model #####################################
 
 # get AIDB token ##################################################
-# conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-# payload = 'username=0INF.UC0&password=0INFUC0&grant_type=password'
-# headers = {
-#   'Content-Type': 'application/x-www-form-urlencoded',
-#   'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
-# }
-# conn.request("POST", "/oauth/token", payload, headers)
-# res = conn.getresponse()
-# data = res.read()
-# print(data.decode("utf-8"))
-# aidb_token = data.decode("utf-8")
+conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+payload = 'username=0INF.UC0&password=0INFUC0&grant_type=password'
+headers = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
+}
+conn.request("POST", "/oauth/token", payload, headers)
+res = conn.getresponse()
+data = res.read()
+print(data.decode("utf-8"))
+aidb_token = data.decode("utf-8")
 
-# input("Token received. Press enter to continue...")
+input("Token received. Press enter to continue...")
 ###################################################################
 
 # get AIDB asset ##################################################
-# conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-# payload = ''
-# headers = {
-#   'Content-Type': 'application/json',
-#   'Authorization': aidb_token
-# }
-# conn.request("GET", "/assetInventory/search?installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
-# res = conn.getresponse()
-# data = res.read()
-# print(data.decode("utf-8"))
+conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+payload = ''
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': aidb_token
+}
+conn.request("GET", "/assetInventory/search?installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
+res = conn.getresponse()
+data = res.read()
+print(data.decode("utf-8"))
 
-# input("Grid received. Press enter to continue...")
+input("Grid received. Press enter to continue...")
 ###################################################################
 
 # manual grid model
@@ -734,18 +734,18 @@ rmq_json['utcTimestamp']         = str(datetime.datetime.now(timezone.utc))
 
 ########################## connect ro rabbitmq AIDB gridpilot #########################
 
-credentials = pika.PlainCredentials('iim-guest', 'iimguest')
-# parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
-parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-connection = pika.BlockingConnection(parameters)
+# credentials = pika.PlainCredentials('iim-guest', 'iimguest')
+# # parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
+# parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+# connection = pika.BlockingConnection(parameters)
 
-channel = connection.channel()
-channel.queue_declare(queue='IIM#IIM')
+# channel = connection.channel()
+# channel.queue_declare(queue='IIM#IIM')
 
-channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
+# channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
 
-print(" [x] Sent 'Islanding scheme!'")
-connection.close()
+# print(" [x] Sent 'Islanding scheme!'")
+# connection.close()
 
 
 print('END OF MIN-CUT METHOD')

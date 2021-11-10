@@ -724,7 +724,7 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 # print(jnet)
 
-rmq_json['messageId']            = uuid.uuid4()
+rmq_json['messageId']            = str(uuid.uuid4())
 rmq_json['payload']['data']      = jnet
 rmq_json['payload']['timestamp'] = datetime.datetime.now()
 rmq_json['utcTimestamp']         = datetime.datetime.now(timezone.utc)

@@ -151,7 +151,7 @@ input("Grid received. Press enter to continue...")
 ###################################################################
 
 # manual grid model
-net=pp.networks.case_ieee30()
+net=pp.networks.case_ieee9()
 
 pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
 plt.savefig('islanding/iim_mlst/static/grid_initial/grid.png')
@@ -722,14 +722,14 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 
 ########################### create result json ########################################
 
-# print(jnet)
+print(jnet)
 
 rmq_json['messageId']            = str(uuid.uuid4())
 rmq_json['payload']['data']      = jnet
 rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
 rmq_json['utcTimestamp']         = str(datetime.datetime.now(timezone.utc))
 
-# print(rmq_json)
+print(rmq_json)
 # input("Press enter to continue...")
 
 ########################## connect ro rabbitmq AIDB gridpilot #########################

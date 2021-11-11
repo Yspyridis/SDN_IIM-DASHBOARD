@@ -120,34 +120,34 @@ def euclidean_distances(x, all_vec):
 ########################### load grid model #####################################
 
 # get AIDB token ##################################################
-conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-payload = 'username=0INF.UC1&password=0INFUC1&grant_type=password'
-headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
-}
-conn.request("POST", "/oauth/token", payload, headers)
-res = conn.getresponse()
-data = res.read()
-print(data.decode("utf-8"))
-aidb_token = data.decode("utf-8")
+# conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+# payload = 'username=0INF.UC1&password=0INFUC1&grant_type=password'
+# headers = {
+#   'Content-Type': 'application/x-www-form-urlencoded',
+#   'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
+# }
+# conn.request("POST", "/oauth/token", payload, headers)
+# res = conn.getresponse()
+# data = res.read()
+# print(data.decode("utf-8"))
+# aidb_token = data.decode("utf-8")
 
-input("Token received. Press enter to continue...")
+# input("Token received. Press enter to continue...")
 ###################################################################
 
 # get AIDB asset ##################################################
-conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-payload = ''
-headers = {
-  'Content-Type': 'application/json',
-  'Authorization': aidb_token
-}
-conn.request("GET", "/assetInventory/search?installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
-res = conn.getresponse()
-data = res.read()
-print(data.decode("utf-8"))
+# conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+# payload = ''
+# headers = {
+#   'Content-Type': 'application/json',
+#   'Authorization': aidb_token
+# }
+# conn.request("GET", "/assetInventory/search?installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
+# res = conn.getresponse()
+# data = res.read()
+# print(data.decode("utf-8"))
 
-input("Grid received. Press enter to continue...")
+# input("Grid received. Press enter to continue...")
 ###################################################################
 
 # manual grid model
@@ -725,27 +725,47 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 print(jnet)
 
 rmq_json['messageId']            = str(uuid.uuid4())
-rmq_json['payload']['data']      = jnet
+# rmq_json['payload']['data']      = jnet
+rmq_json['payload']['data']      = {"module":"test",
+                                        "name":"test"
+                                        }
 rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
 rmq_json['utcTimestamp']         = str(datetime.datetime.now(timezone.utc))
 
 print(rmq_json)
 # input("Press enter to continue...")
 
+with open('data1.json', 'w', encoding='utf-8') as f:
+    json.dump(jnet, f, ensure_ascii=False, indent=4)
+    
+with open('data2.json', 'w', encoding='utf-8') as f:
+    json.dump(rmq_json, f, ensure_ascii=False, indent=4)    
+    
 ########################## connect ro rabbitmq AIDB gridpilot #########################
 
-# credentials = pika.PlainCredentials('iim-guest', 'iimguest')
-# # parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
-# parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-# connection = pika.BlockingConnection(parameters)
-
+# print(" [x] Trying rabbitmq")
+# url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
+# params = pika.URLParameters(url)
+# connection = pika.BlockingConnection(params)
 # channel = connection.channel()
-# channel.queue_declare(queue='IIM#IIM')
+# channel.queue_declare(queue='mlst_iim')
+# channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(rmq_json))
 
-# channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
-
-# print(" [x] Sent 'Islanding scheme!'")
+# print(" [x] Sent test")
 # connection.close()
+
+credentials = pika.PlainCredentials('iim-guest', 'iimguest')
+# parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
+parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+connection = pika.BlockingConnection(parameters)
+
+channel = connection.channel()
+channel.queue_declare(queue='IIM#IIM')
+
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
+
+print(" [x] Sent 'Islanding scheme!'")
+connection.close()
 
 
 print('END OF MIN-CUT METHOD')

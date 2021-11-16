@@ -423,7 +423,7 @@ pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.
 plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
 print('END OF GAP METHOD')
 print('#######################################')
@@ -719,7 +719,7 @@ pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.
 plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
 ########################### create result json ########################################
 
@@ -727,7 +727,7 @@ simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding
 net  = pp.networks.case_ieee30()
 jnet = pp.to_json(net, filename=None, encryption_key=None)
 
-rrmq_json = {
+rmq_json = {
     "messageId": "e8793bb7-a4ea-4a5b-99b2-dc9caac24720",
     "name": "islanding_result",
     "payload": {
@@ -4222,29 +4222,29 @@ rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
     
 ########################## connect ro rabbitmq AIDB gridpilot #########################
 
-print(" [x] Trying rabbitmq")
-url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
-params = pika.URLParameters(url)
-connection = pika.BlockingConnection(params)
-channel = connection.channel()
-channel.queue_declare(queue='mlst_iim')
-channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(rmq_json))
-
-print(" [x] Sent test")
-connection.close()
-
-# credentials = pika.PlainCredentials('iim-guest', 'iimguest')
-# # parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
-# parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-# connection = pika.BlockingConnection(parameters)
-
+# print(" [x] Trying rabbitmq")
+# url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
+# params = pika.URLParameters(url)
+# connection = pika.BlockingConnection(params)
 # channel = connection.channel()
-# channel.queue_declare(queue='IIM#IIM')
+# channel.queue_declare(queue='mlst_iim')
+# channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(rmq_json))
 
-# channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
-
-# print(" [x] Sent 'Islanding scheme!'")
+# print(" [x] Sent test")
 # connection.close()
+
+credentials = pika.PlainCredentials('iim-guest', 'iimguest')
+# parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
+parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+connection = pika.BlockingConnection(parameters)
+
+channel = connection.channel()
+channel.queue_declare(queue='IIM#IIM')
+
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
+
+print(" [x] Sent 'Islanding scheme!'")
+connection.close()
 
 
 print('END OF MIN-CUT METHOD')

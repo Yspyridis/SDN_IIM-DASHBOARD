@@ -745,15 +745,15 @@ print('#######################################')
 ########################### create result json ########################################
 
 # print(jnet)
-# net  = pp.networks.case5()
+nnet  = pp.networks.case5()
 # net  = pp.networks.case4gs()
-# jnet = pp.to_json(net, filename=None, encryption_key=None)
+jnnet = pp.to_json(nnet, filename=None, encryption_key=None)
 # snet = pp.to_json(net, filename='case4.json', encryption_key=None)
 
 # print(jnet)
 # rmq_json['messageId'] = str(uuid.uuid4())
-rmq_json['messageId']            = 'test_case5a'
-rmq_json['payload'] = jnet
+rmq_json['messageId']            = 'test_case5b'
+rmq_json['payload'] = jnnet
 # rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
 rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
 

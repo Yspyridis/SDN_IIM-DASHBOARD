@@ -421,7 +421,7 @@ pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.
 plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
 print('END OF GAP METHOD')
 print('#######################################')
@@ -745,17 +745,30 @@ print('#######################################')
 ########################### create result json ########################################
 
 # print(jnet)
-nnet  = pp.networks.case5()
+# nnet  = pp.networks.case5()
 # net  = pp.networks.case4gs()
-jnnet = pp.to_json(nnet, filename=None, encryption_key=None)
+# jnnet = pp.to_json(nnet, filename=None, encryption_key=None)
 # snet = pp.to_json(net, filename='case4.json', encryption_key=None)
 
+# print('####################################### gapnnet')
 # print(jnet)
+# print('#######################################')
+# print('#######################################')
+# print('#######################################')
+
+# knnet = json.dumps(jnnet, separators=(',', ":"))
+
+# print('####################################### knnet')
+# print(knnet)
+# print('#######################################')
+# print('#######################################')
+# print('#######################################')
+
 # rmq_json['messageId'] = str(uuid.uuid4())
-rmq_json['messageId']            = 'test_case5b'
-rmq_json['payload'] = jnnet
+# rmq_json['messageId']            = 'test_case5_final'
+# rmq_json['payload'] = jnet
 # rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
-rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
+# rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
 
 # print(rmq_json)
 # input("Press enter to continue...")
@@ -775,7 +788,8 @@ rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
 # connection = pika.BlockingConnection(params)
 # channel = connection.channel()
 # channel.queue_declare(queue='mlst_iim')
-# channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(rmq_json))
+# # channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(rmq_json))
+# channel.basic_publish(exchange='', routing_key='mlst_iim', body=jnet)
 
 # print(" [x] Sent test")
 # connection.close()
@@ -791,7 +805,7 @@ connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='IIM#IIM')
 
-channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body = json.dumps(rmq_json))
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body=jnet)
 
 print(" [x] Sent 'Islanding scheme!'")
 connection.close()

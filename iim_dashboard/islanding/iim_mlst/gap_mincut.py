@@ -421,7 +421,7 @@ pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.
 plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
 
 pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
 print('END OF GAP METHOD')
 print('#######################################')
@@ -764,22 +764,29 @@ print('#######################################')
 # print('#######################################')
 # print('#######################################')
 
-# rmq_json['messageId'] = str(uuid.uuid4())
-# rmq_json['messageId']            = 'test_case5_final'
-# rmq_json['payload'] = jnet
-# rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
-# rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
 
+# rmq_json['messageId'] = str(uuid.uuid4())
+rmq_json['messageId'] = 'new'
+# rmq_json['payload']   = jnet # messes up the format, like twice dumps does
+# rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
+rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
+
+with open('jsonminifier.json') as f:
+  json_data = json.load(f)
+
+final_json = json.dumps(json_data)
+print(final_json)
+
+# saved_rmqjson = pp.to_json(rmq_json, filename='rmq_json.json', encryption_key=None)
 # print(rmq_json)
-# input("Press enter to continue...")
+input("Press enter to send json to rabbitmq...")
 
 # with open('data1.json', 'w', encoding='utf-8') as f:
 #     json.dump(jnet, f, ensure_ascii=False, indent=4)
     
 # with open('data2.json', 'w', encoding='utf-8') as f:
 #     json.dump(rmq_json, f, ensure_ascii=False, indent=4)    
-    
-    
+       
 ########################## test CLOUDAMQP_URL rabbit mq ################################
 
 # print(" [x] Trying rabbitmq")
@@ -788,8 +795,8 @@ print('#######################################')
 # connection = pika.BlockingConnection(params)
 # channel = connection.channel()
 # channel.queue_declare(queue='mlst_iim')
-# # channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(rmq_json))
-# channel.basic_publish(exchange='', routing_key='mlst_iim', body=jnet)
+# # channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(json_data))
+# channel.basic_publish(exchange='', routing_key='mlst_iim', body=final_json, properties=pika.BasicProperties(delivery_mode = 2,))
 
 # print(" [x] Sent test")
 # connection.close()
@@ -805,7 +812,7 @@ connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='IIM#IIM')
 
-channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key ='IIM#IIM', body=jnet)
+channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key='IIM#IIM', body=final_json, properties=pika.BasicProperties(delivery_mode = 2,))
 
 print(" [x] Sent 'Islanding scheme!'")
 connection.close()

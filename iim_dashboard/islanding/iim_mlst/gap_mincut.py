@@ -72,7 +72,7 @@ rmq_json = {
     "payload": "",
     "payloadType": "Payload",
     "source": "PublisherWithPipeline",
-    "uc": "UC1",
+    "uc": "UC0",
     "utcTimestamp": ""
 }
 #########################################################
@@ -766,7 +766,7 @@ print('#######################################')
 
 
 # rmq_json['messageId'] = str(uuid.uuid4())
-rmq_json['messageId'] = 'new'
+rmq_json['messageId'] = 'integration_test_iim_mlst'
 # rmq_json['payload']   = jnet # messes up the format, like twice dumps does
 # rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
 rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
@@ -774,7 +774,12 @@ rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
 with open('jsonminifier.json') as f:
   json_data = json.load(f)
 
-final_json = json.dumps(json_data)
+rmq_json['payload']   = json_data # messes up the format, like twice dumps does
+# input("Press enter to print rmqjson...")
+# print(rmq_json)
+
+final_json = json.dumps(rmq_json)
+# final_json = json.dumps(json_data)
 print(final_json)
 
 # saved_rmqjson = pp.to_json(rmq_json, filename='rmq_json.json', encryption_key=None)

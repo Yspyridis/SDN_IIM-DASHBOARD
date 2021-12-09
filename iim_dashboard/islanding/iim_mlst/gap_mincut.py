@@ -57,7 +57,7 @@ from pandapower.plotting.plotly import simple_plotly
 
 # training epochs
 #################### training epochs ####################
-epochs  = 100
+epochs  = 3000
 #########################################################
 
 #################### number of clusters #################
@@ -766,10 +766,12 @@ print('#######################################')
 
 
 # rmq_json['messageId'] = str(uuid.uuid4())
-rmq_json['messageId'] = 'integration_test_iim_mlst_9_Dec'
+rmq_json['messageId'] = 'integration_test_iim_mlst_real_9_Dec'
 # rmq_json['payload']   = jnet # messes up the format, like twice dumps does
 # rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
 rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
+
+input("Press enter to load minified json...")
 
 with open('jsonminifier.json') as f:
   json_data = json.load(f)

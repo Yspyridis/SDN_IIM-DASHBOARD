@@ -794,33 +794,33 @@ input("Press enter to send json to rabbitmq...")
        
 ########################## test CLOUDAMQP_URL rabbit mq ################################
 
-# print(" [x] Trying rabbitmq")
-# url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
-# params = pika.URLParameters(url)
-# connection = pika.BlockingConnection(params)
-# channel = connection.channel()
-# channel.queue_declare(queue='mlst_iim')
-# # channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(json_data))
-# channel.basic_publish(exchange='', routing_key='mlst_iim', body=final_json, properties=pika.BasicProperties(delivery_mode = 2,))
+print(" [x] Trying rabbitmq")
+url = os.environ.get('CLOUDAMQP_URL', 'amqps://jdzlpput:5ny6ANo8vdhwr8iYkwVXd_8sRwyIKLBi@rattlesnake.rmq.cloudamqp.com/jdzlpput')
+params = pika.URLParameters(url)
+connection = pika.BlockingConnection(params)
+channel = connection.channel()
+channel.queue_declare(queue='mlst_iim')
+# channel.basic_publish(exchange='', routing_key='mlst_iim', body=json.dumps(json_data))
+channel.basic_publish(exchange='', routing_key='mlst_iim', body=final_json, properties=pika.BasicProperties(delivery_mode = 2,))
 
-# print(" [x] Sent test")
-# connection.close()
+print(" [x] Sent test")
+connection.close()
 #######################################################################################
 
 ########################## connect to rabbitmq AIDB gridpilot #########################
 
-credentials = pika.PlainCredentials('iim-guest', 'iimguest')
-# parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
-parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
-connection = pika.BlockingConnection(parameters)
+# credentials = pika.PlainCredentials('iim-guest', 'iimguest')
+# # parameters = pika.ConnectionParameters('3.120.35.154', 5672, 'iim', credentials)
+# parameters = pika.ConnectionParameters('rabbit.prod.gridpilot.tech', 5672, 'iim', credentials)
+# connection = pika.BlockingConnection(parameters)
 
-channel = connection.channel()
-channel.queue_declare(queue='IIM#IIM')
+# channel = connection.channel()
+# channel.queue_declare(queue='IIM#IIM')
 
-channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key='IIM#IIM', body=final_json, properties=pika.BasicProperties(delivery_mode = 2,))
+# channel.basic_publish(exchange='Islanding_Exchange.headers', routing_key='IIM#IIM', body=final_json, properties=pika.BasicProperties(delivery_mode = 2,))
 
-print(" [x] Sent 'Islanding scheme!'")
-connection.close()
+# print(" [x] Sent 'Islanding scheme!'")
+# connection.close()
 #######################################################################################
 
 print('End.')

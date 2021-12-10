@@ -148,10 +148,10 @@ def euclidean_distances(x, all_vec):
 ###################################################################
 
 # manual grid model
-net = pp.from_json("gridmodel-alkyonis.json")
+# net = pp.from_json("gridmodel-alkyonis.json")
 
 # net=pp.networks.case_ieee30()
-# net=pp.networks.case5()
+net=pp.networks.case5()
 
 pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
 plt.savefig('islanding/iim_mlst/static/grid_initial/grid.png')

@@ -773,7 +773,7 @@ rmq_json['messageId'] = 'integration_test_iim_mlst_real_9_Dec'
 # rmq_json['payload']['timestamp'] = str(datetime.datetime.now())
 rmq_json['utcTimestamp'] = str(datetime.datetime.now(timezone.utc))
 
-input("Press enter to load minified json...")
+# input("Press enter to load minified json...")
 
 with open('jsonminifier.json') as f:
   json_data = json.load(f)
@@ -784,11 +784,11 @@ rmq_json['payload']   = json_data # messes up the format, like twice dumps does
 
 final_json = json.dumps(rmq_json)
 # final_json = json.dumps(json_data)
-print(final_json)
+# print(final_json)
 
 # saved_rmqjson = pp.to_json(rmq_json, filename='rmq_json.json', encryption_key=None)
 # print(rmq_json)
-input("Press enter to send json to rabbitmq...")
+# input("Press enter to send json to rabbitmq...")
 
 # with open('data1.json', 'w', encoding='utf-8') as f:
 #     json.dump(jnet, f, ensure_ascii=False, indent=4)

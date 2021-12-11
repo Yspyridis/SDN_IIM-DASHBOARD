@@ -456,291 +456,292 @@ print('#######################################')
 
 
 # ########################### load grid model #####################################
-# # replace with AIDB connection ##################################################
+# replace with AIDB connection ##################################################
 
 # net=pp.networks.case_ieee30()
+net = pp.from_json('gridmodel-alkyonis-2.json')
 
-# print('#######################################')
-# print('#######################################')
-# print(net)
-# print('#######################################')
-# print('#######################################')
+print('#######################################')
+print('#######################################')
+print(net)
+print('#######################################')
+print('#######################################')
 
-# print('#######################################')
-# print('#######################################')
-# print(pp.rundcpp(net))
-# print('#######################################')
-# print('#######################################')
-# ##################################################################################
+print('#######################################')
+print('#######################################')
+print(pp.rundcpp(net))
+print('#######################################')
+print('#######################################')
+##################################################################################
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--dataset', type=str, default='wine', help='Dataset to use')
-# parser.add_argument('-l', '--layers', nargs='+', type=int, default=[128, 64, 128], help='Sparsity Penalty Parameter')
-# parser.add_argument('-b', '--beta', type=float, default=0.01, help='Sparsity Penalty Parameter')
-# parser.add_argument('-p', '--rho', type=float, default=0.5, help='Prior rho')
-# parser.add_argument('-lr', type=float, default=0.0001, help='Learning Rate')
-# parser.add_argument('-weight_decay', type=float, default=1e-4, help='weight_decay')#0.00001
-# parser.add_argument('-epoch', type=int, default=200, help='Number of Training Epochs')
-# parser.add_argument('-device', type=str, default='cpu', help='Train on GPU or CPU')
+parser = argparse.ArgumentParser()
+parser.add_argument('--dataset', type=str, default='wine', help='Dataset to use')
+parser.add_argument('-l', '--layers', nargs='+', type=int, default=[128, 64, 128], help='Sparsity Penalty Parameter')
+parser.add_argument('-b', '--beta', type=float, default=0.01, help='Sparsity Penalty Parameter')
+parser.add_argument('-p', '--rho', type=float, default=0.5, help='Prior rho')
+parser.add_argument('-lr', type=float, default=0.0001, help='Learning Rate')
+parser.add_argument('-weight_decay', type=float, default=1e-4, help='weight_decay')#0.00001
+parser.add_argument('-epoch', type=int, default=200, help='Number of Training Epochs')
+parser.add_argument('-device', type=str, default='cpu', help='Train on GPU or CPU')
 
-# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-# args = parser.parse_args()
-# num_epoch = epochs
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+args = parser.parse_args()
+num_epoch = epochs
 
-# def search_1d(a,lines):
-#     """find the corresponding index that a=lines[i]"""
-#     count=0
-#     result_search=0
-#     for item in lines:
+def search_1d(a,lines):
+    """find the corresponding index that a=lines[i]"""
+    count=0
+    result_search=0
+    for item in lines:
 
-#         if (a == item).all():
-#             result_search=1
-#             break
-#         count += 1
-#     return count,result_search
-
-
-# pp.runpp(net)
-# case_num=len(net.res_bus)
-# save_fig_path='static/case_'+str(case_num)
-# # if not os.path.exists(save_fig_path):
-# #     os.mkdir(save_fig_path)
-# gen=net.gen
-
-# k = kappa  
-
-# index_store=np.zeros(len(gen))
-# for i in range(len(gen)):
-#     inndex_sb=net.gen.bus.values[i]
-#     a=net.bus.loc[inndex_sb].values
-#     a_index,a_succ=search_1d(a,net.bus.values)
-#     index_store[i]=a_index
-# np.random.shuffle(index_store)
-# gen_index=torch.tensor(np.int64(index_store))
-
-# gen = net.ext_grid
-# index_store=np.zeros(len(gen))
-# for i in range(len(gen)):
-#     inndex_sb=net.ext_grid.bus.values[i]
-#     a=net.bus.loc[inndex_sb].values
-#     a_index,a_succ=search_1d(a,net.bus.values)
-#     index_store[i]=a_index
-# extra_grid_index=torch.tensor(np.int64(index_store))
-
-# ########################### extract information from pandapower lib #####################################
-# # for graph representation purpose ######################################################################
-# res_transfrom=net.res_trafo.values
-# h_index_trans=net.trafo.hv_bus.values
-# l_index_trans=net.trafo.lv_bus.values
-# nodes=net.res_bus.values
-# bus_inc=nodes[:,2]
-# lines=net.line.values
-# res_lines=net.res_line.values
-
-# min_max_scaler = preprocessing.MinMaxScaler()
-# nodes = min_max_scaler.fit_transform(nodes)
-
-# S = cosine_similarity(nodes, nodes)
-
-# ########################### construct the adjacent matrix from lines and transformer #####################################
-# adjacent_matrix=np.zeros_like(S)
-# from_bus_index=np.where(net.line.keys()=='from_bus')[0]
-# to_bus_index=np.where(net.line.keys()=='to_bus')[0]
-
-# for i in range(len(lines)):
-#     from_num=lines[i][from_bus_index]
-
-#     to_num=lines[i][to_bus_index]
-#     a=net.bus.loc[from_num].values
-#     b=net.bus.loc[to_num].values
-#     a_index,a_succ=search_1d(a,net.bus.values)
-#     b_index, b_succ = search_1d(b, net.bus.values)
-#     if a_succ and b_succ:
-#         absolut_value=np.sqrt(res_lines[i][0]**2+res_lines[i][1]**2)+ 1e-7
-#         adjacent_matrix[b_index,a_index]=absolut_value
-#         adjacent_matrix[a_index, b_index] = absolut_value
-#     else:
-#         print('search fail')
-#         print('current item is '+str(i))
-#         sys,exit()
-#     c=1
-
-# for i in range(len(adjacent_matrix)):
-#     adjacent_matrix[i, i] = 1
-
-# for i in range(len(h_index_trans)):
-#     from_num=h_index_trans[i]
-#     to_num=l_index_trans[i]
-#     a = net.bus.loc[from_num].values
-#     b = net.bus.loc[to_num].values
-#     a_index, a_succ = search_1d(a, net.bus.values)
-#     b_index, b_succ = search_1d(b, net.bus.values)
-#     if a_succ and b_succ:
-#         absolut_value = np.abs((net.res_trafo.values[i][0] + net.res_trafo.values[i][2]) / 2)+ 1e-7
-#         adjacent_matrix[b_index, a_index] = absolut_value
-#         adjacent_matrix[a_index, b_index] = absolut_value
+        if (a == item).all():
+            result_search=1
+            break
+        count += 1
+    return count,result_search
 
 
-# ########################### convert to Laplcian matrix and degree matrix #####################################
-# indices_ad=np.where(adjacent_matrix>0)
-# tor_adjacent_matrix = torch.from_numpy(adjacent_matrix).to(device)#.cuda()
-# new_adj=torch.zeros_like(tor_adjacent_matrix)
-# new_adj[indices_ad]=1
-# for i in range(len(new_adj)):
-#     new_adj[i,i]=0
-# adjacent_matrix=new_adj.cpu().numpy()
-# csc_adjacent_matrix=sparse.csr_matrix(adjacent_matrix)
-# La=utilities.laplacian(csc_adjacent_matrix, normalized=True)
-# La=utilities.csc2sparsetensor(La).to(device)
-# spars_Adj=utilities.csc2sparsetensor(csc_adjacent_matrix).to(device)
-# D = np.diag(1.0 / np.sqrt(adjacent_matrix.sum(axis=1)))
-# X_train=torch.tensor(nodes).float().to(device)
-# layers = [len(X_train)] + args.layers + [k]
+pp.runpp(net)
+case_num=len(net.res_bus)
+save_fig_path='static/case_'+str(case_num)
+# if not os.path.exists(save_fig_path):
+#     os.mkdir(save_fig_path)
+gen=net.gen
+
+k = kappa  
+
+index_store=np.zeros(len(gen))
+for i in range(len(gen)):
+    inndex_sb=net.gen.bus.values[i]
+    a=net.bus.loc[inndex_sb].values
+    a_index,a_succ=search_1d(a,net.bus.values)
+    index_store[i]=a_index
+np.random.shuffle(index_store)
+gen_index=torch.tensor(np.int64(index_store))
+
+gen = net.ext_grid
+index_store=np.zeros(len(gen))
+for i in range(len(gen)):
+    inndex_sb=net.ext_grid.bus.values[i]
+    a=net.bus.loc[inndex_sb].values
+    a_index,a_succ=search_1d(a,net.bus.values)
+    index_store[i]=a_index
+extra_grid_index=torch.tensor(np.int64(index_store))
+
+########################### extract information from pandapower lib #####################################
+# for graph representation purpose ######################################################################
+res_transfrom=net.res_trafo.values
+h_index_trans=net.trafo.hv_bus.values
+l_index_trans=net.trafo.lv_bus.values
+nodes=net.res_bus.values
+bus_inc=nodes[:,2]
+lines=net.line.values
+res_lines=net.res_line.values
+
+min_max_scaler = preprocessing.MinMaxScaler()
+nodes = min_max_scaler.fit_transform(nodes)
+
+S = cosine_similarity(nodes, nodes)
+
+########################### construct the adjacent matrix from lines and transformer #####################################
+adjacent_matrix=np.zeros_like(S)
+from_bus_index=np.where(net.line.keys()=='from_bus')[0]
+to_bus_index=np.where(net.line.keys()=='to_bus')[0]
+
+for i in range(len(lines)):
+    from_num=lines[i][from_bus_index]
+
+    to_num=lines[i][to_bus_index]
+    a=net.bus.loc[from_num].values
+    b=net.bus.loc[to_num].values
+    a_index,a_succ=search_1d(a,net.bus.values)
+    b_index, b_succ = search_1d(b, net.bus.values)
+    if a_succ and b_succ:
+        absolut_value=np.sqrt(res_lines[i][0]**2+res_lines[i][1]**2)+ 1e-7
+        adjacent_matrix[b_index,a_index]=absolut_value
+        adjacent_matrix[a_index, b_index] = absolut_value
+    else:
+        print('search fail')
+        print('current item is '+str(i))
+        sys,exit()
+    c=1
+
+for i in range(len(adjacent_matrix)):
+    adjacent_matrix[i, i] = 1
+
+for i in range(len(h_index_trans)):
+    from_num=h_index_trans[i]
+    to_num=l_index_trans[i]
+    a = net.bus.loc[from_num].values
+    b = net.bus.loc[to_num].values
+    a_index, a_succ = search_1d(a, net.bus.values)
+    b_index, b_succ = search_1d(b, net.bus.values)
+    if a_succ and b_succ:
+        absolut_value = np.abs((net.res_trafo.values[i][0] + net.res_trafo.values[i][2]) / 2)+ 1e-7
+        adjacent_matrix[b_index, a_index] = absolut_value
+        adjacent_matrix[a_index, b_index] = absolut_value
 
 
-# ########################### initialize GCN model #####################################
-# import gcn_model
-# model = gcn_model.GraphEncoder(layers, k,La,len(X_train[0]),device=device,cluster_num=k).to(device)
-
-# optimizer = optim.Adam(model.parameters(), lr=args.lr,weight_decay=0)
-# with tqdm(total=num_epoch) as tq:
-#     for epoch in range(1, num_epoch + 1):
-#         optimizer.zero_grad()
-#         X_hat = model(X_train)
-
-#         loss = model.min_cut_loss(adjacent_matrix,X_hat,bus_inc,gen_index=gen_index)
-
-#         loss.backward()
-#         optimizer.step()
-#         tq.set_postfix(loss='{:.3f}'.format(loss), nmi='{:.3f}'.format(1), rank_loss='{:.4f}'.format(1))
-#         tq.update()
-
-# output_predict=torch.argmax(X_hat,dim=1)
-# output_predict=output_predict.cpu().numpy()
+########################### convert to Laplcian matrix and degree matrix #####################################
+indices_ad=np.where(adjacent_matrix>0)
+tor_adjacent_matrix = torch.from_numpy(adjacent_matrix).to(device)#.cuda()
+new_adj=torch.zeros_like(tor_adjacent_matrix)
+new_adj[indices_ad]=1
+for i in range(len(new_adj)):
+    new_adj[i,i]=0
+adjacent_matrix=new_adj.cpu().numpy()
+csc_adjacent_matrix=sparse.csr_matrix(adjacent_matrix)
+La=utilities.laplacian(csc_adjacent_matrix, normalized=True)
+La=utilities.csc2sparsetensor(La).to(device)
+spars_Adj=utilities.csc2sparsetensor(csc_adjacent_matrix).to(device)
+D = np.diag(1.0 / np.sqrt(adjacent_matrix.sum(axis=1)))
+X_train=torch.tensor(nodes).float().to(device)
+layers = [len(X_train)] + args.layers + [k]
 
 
-# ########################### evaluation #####################################
+########################### initialize GCN model #####################################
+import gcn_model
+model = gcn_model.GraphEncoder(layers, k,La,len(X_train[0]),device=device,cluster_num=k).to(device)
 
-# # Initiate here variables to hold the values that will be stored in db #####
-# island_imbalance_initial = []
-# total_imbalance_initial = 0
-# island_imbalance_after = []
-# total_imbalance_after = 0
-# lines = 0
-# ############################################################################
+optimizer = optim.Adam(model.parameters(), lr=args.lr,weight_decay=0)
+with tqdm(total=num_epoch) as tq:
+    for epoch in range(1, num_epoch + 1):
+        optimizer.zero_grad()
+        X_hat = model(X_train)
 
-# sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
-# for i in range(len(island_inc)):
-#     print('island imbalance ' +str(i)+': '+str(island_inc[i]))
-#     island_imbalance_initial.append( island_inc[i].numpy()[0] )
-# print('total island imbalance= '+str(sum_inc) )
+        loss = model.min_cut_loss(adjacent_matrix,X_hat,bus_inc,gen_index=gen_index)
 
-# total_imbalance_initial = sum_inc
+        loss.backward()
+        optimizer.step()
+        tq.set_postfix(loss='{:.3f}'.format(loss), nmi='{:.3f}'.format(1), rank_loss='{:.4f}'.format(1))
+        tq.update()
+
+output_predict=torch.argmax(X_hat,dim=1)
+output_predict=output_predict.cpu().numpy()
 
 
-# ########################### cut lines #####################################
-# line_to_cut=[]
-# for i in range(len(adjacent_matrix)):
-#     current_index=i
-#     current_line=adjacent_matrix[i]
-#     index_adj=np.where(current_line>0)
-#     for neibhor_vertex in index_adj[0]:
-#         if output_predict[current_index]==output_predict[neibhor_vertex]:
-#             continue
-#         else:
-#             line_to_cut+=[[current_index,neibhor_vertex]]
-# number_lines=0
-# lines_to_cut=[]
+########################### evaluation #####################################
 
-# for single_line_tocut in line_to_cut:
-#     tem_bus1=net.bus.index[single_line_tocut[0]]
-#     line_num1 = np.where(net.line['from_bus'] == tem_bus1)
-#     tem_bus2 = net.bus.index[single_line_tocut[1]]
-#     line_num2 = np.where(net.line['to_bus'] == tem_bus2)
-#     line_num =list(set(line_num1[0]) & set(line_num2[0]))
-#     line_num = np.array(line_num)
+# Initiate here variables to hold the values that will be stored in db #####
+island_imbalance_initial = []
+total_imbalance_initial = 0
+island_imbalance_after = []
+total_imbalance_after = 0
+lines = 0
+############################################################################
 
-#     if len(np.array(line_num))==0:
-#         continue
-#     else:
-#         if len(line_num)>1:
-#             for single_line_num in line_num:
-#                 line_num = net.line.index[single_line_num]
-#                 lines_to_cut += [line_num]
-#                 number_lines += 1
-#         else:
-#             line_num = net.line.index[line_num[0]]
-#             lines_to_cut+=[line_num]
-#             number_lines += 1
+sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
+for i in range(len(island_inc)):
+    print('island imbalance ' +str(i)+': '+str(island_inc[i]))
+    island_imbalance_initial.append( island_inc[i].numpy()[0] )
+print('total island imbalance= '+str(sum_inc) )
 
-# pp.drop_lines(net, lines_to_cut)
+total_imbalance_initial = sum_inc
 
-# ########################### drop transformers #####################################
-# lines_to_cut=[]
-# for single_line_tocut in line_to_cut:
 
-#     tem_bus1=net.bus.index[single_line_tocut[0]]
-#     line_num1 = np.where(net.trafo['hv_bus'] == tem_bus1)
-#     tem_bus2 = net.bus.index[single_line_tocut[1]]
-#     line_num2 = np.where(net.trafo['lv_bus'] == tem_bus2)
-#     line_num =list(set(line_num1[0]) & set(line_num2[0]))
-#     line_num = np.array(line_num)
+########################### cut lines #####################################
+line_to_cut=[]
+for i in range(len(adjacent_matrix)):
+    current_index=i
+    current_line=adjacent_matrix[i]
+    index_adj=np.where(current_line>0)
+    for neibhor_vertex in index_adj[0]:
+        if output_predict[current_index]==output_predict[neibhor_vertex]:
+            continue
+        else:
+            line_to_cut+=[[current_index,neibhor_vertex]]
+number_lines=0
+lines_to_cut=[]
 
-#     if len(np.array(line_num))==0:
-#         continue
-#     else:
-#         line_num = net.trafo.index[line_num[0]]
-#         lines_to_cut+=[line_num]
-#         number_lines += 1
+for single_line_tocut in line_to_cut:
+    tem_bus1=net.bus.index[single_line_tocut[0]]
+    line_num1 = np.where(net.line['from_bus'] == tem_bus1)
+    tem_bus2 = net.bus.index[single_line_tocut[1]]
+    line_num2 = np.where(net.line['to_bus'] == tem_bus2)
+    line_num =list(set(line_num1[0]) & set(line_num2[0]))
+    line_num = np.array(line_num)
 
-# pp.drop_trafos(net, lines_to_cut)
+    if len(np.array(line_num))==0:
+        continue
+    else:
+        if len(line_num)>1:
+            for single_line_num in line_num:
+                line_num = net.line.index[single_line_num]
+                lines_to_cut += [line_num]
+                number_lines += 1
+        else:
+            line_num = net.line.index[line_num[0]]
+            lines_to_cut+=[line_num]
+            number_lines += 1
 
-# sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
+pp.drop_lines(net, lines_to_cut)
 
-# for i in range(len(island_inc)):
-#     print('island imbalance ' +str(i)+': '+str(island_inc[i]))
-#     island_imbalance_after.append( island_inc[i].numpy()[0] )
-# print('total island imbalance= '+str(sum_inc) )
-# print('number of lines to cut= '+str(number_lines))
+########################### drop transformers #####################################
+lines_to_cut=[]
+for single_line_tocut in line_to_cut:
 
-# total_imbalance_after = sum_inc
-# lines = number_lines
+    tem_bus1=net.bus.index[single_line_tocut[0]]
+    line_num1 = np.where(net.trafo['hv_bus'] == tem_bus1)
+    tem_bus2 = net.bus.index[single_line_tocut[1]]
+    line_num2 = np.where(net.trafo['lv_bus'] == tem_bus2)
+    line_num =list(set(line_num1[0]) & set(line_num2[0]))
+    line_num = np.array(line_num)
 
-# ########################### run pp to test result #####################################
+    if len(np.array(line_num))==0:
+        continue
+    else:
+        line_num = net.trafo.index[line_num[0]]
+        lines_to_cut+=[line_num]
+        number_lines += 1
 
-# pp.runpp(net)
+pp.drop_trafos(net, lines_to_cut)
 
-# jnet=pp.to_json(net, filename=None, encryption_key=None)
-# mc_net=pp.to_json(net, filename='mc_net.json', encryption_key=None)
-# method='MIN-CUT'
-# # IslandingScheme.objects.all().delete()
-# IslandingScheme.objects.create( method_name=method, island_imbalance=island_imbalance_initial, total_imbalance=total_imbalance_initial, island_imbalance_after_cut=island_imbalance_after, total_imbalance_after_cut=total_imbalance_after, lines_to_cut=lines, grid=jnet )
+sum_inc,island_inc=evaluation_mini_imblance(X_hat,output_predict,bus_inc)
 
-# pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
-# plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
+for i in range(len(island_inc)):
+    print('island imbalance ' +str(i)+': '+str(island_inc[i]))
+    island_imbalance_after.append( island_inc[i].numpy()[0] )
+print('total island imbalance= '+str(sum_inc) )
+print('number of lines to cut= '+str(number_lines))
 
-# pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
-# # simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+total_imbalance_after = sum_inc
+lines = number_lines
 
-# print('END OF MIN-CUT METHOD')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
-# print('#######################################')
+########################### run pp to test result #####################################
+
+pp.runpp(net)
+
+jnet=pp.to_json(net, filename=None, encryption_key=None)
+mc_net=pp.to_json(net, filename='mc_net.json', encryption_key=None)
+method='MIN-CUT'
+# IslandingScheme.objects.all().delete()
+IslandingScheme.objects.create( method_name=method, island_imbalance=island_imbalance_initial, total_imbalance=total_imbalance_initial, island_imbalance_after_cut=island_imbalance_after, total_imbalance_after_cut=total_imbalance_after, lines_to_cut=lines, grid=jnet )
+
+pp.plotting.simple_plot(net, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
+plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
+
+pp.plotting.to_html(net, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
+# simple_plotly_gen(net, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+
+print('END OF MIN-CUT METHOD')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
+print('#######################################')
 
 # #################### END MINCUT METHOD ####################
 

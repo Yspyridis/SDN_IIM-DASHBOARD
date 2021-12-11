@@ -148,7 +148,7 @@ def euclidean_distances(x, all_vec):
 ###################################################################
 
 # manual grid model
-net = pp.from_json("gridmodel-alkyonis.json")
+net = pp.from_json('gridmodel-alkyonis-2.json')
 
 # net=pp.networks.case_ieee30()
 # net=pp.networks.case5()

@@ -117,19 +117,19 @@ def euclidean_distances(x, all_vec):
 ########################### load grid model #####################################
 
 # get AIDB token ##################################################
-conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-payload = 'username=0INF.UC1&password=0INFUC1&grant_type=password'
-headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
-}
-conn.request("POST", "/oauth/token", payload, headers)
-res = conn.getresponse()
-data = res.read()
-print(data.decode("utf-8"))
-aidb_token = data.decode("utf-8")
+# conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
+# payload = 'username=0INF.UC1&password=0INFUC1&grant_type=password'
+# headers = {
+#   'Content-Type': 'application/x-www-form-urlencoded',
+#   'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
+# }
+# conn.request("POST", "/oauth/token", payload, headers)
+# res = conn.getresponse()
+# data = res.read()
+# print(data.decode("utf-8"))
+# aidb_token = data.decode("utf-8")
 
-input("Token received. Press enter to continue...")
+# input("Token received. Press enter to continue...")
 ###################################################################
 
 # get AIDB asset ##################################################
@@ -148,7 +148,7 @@ input("Token received. Press enter to continue...")
 ###################################################################
 
 # manual grid model
-# net = pp.from_json('gridmodel-alkyonis-2.json')
+net = pp.from_json('gridmodel-alkyonis-2.json')
 
 # net=pp.networks.case_ieee30()
 # net=pp.networks.case5()
@@ -786,11 +786,11 @@ rmq_json['payload']   = json_data # messes up the format, like twice dumps does
 
 final_json = json.dumps(rmq_json)
 # final_json = json.dumps(json_data)
-# print(final_json)
+print(final_json)
 
 # saved_rmqjson = pp.to_json(rmq_json, filename='rmq_json.json', encryption_key=None)
 # print(rmq_json)
-# input("Press enter to send json to rabbitmq...")
+input("Press enter to send json to rabbitmq...")
 
 # with open('data1.json', 'w', encoding='utf-8') as f:
 #     json.dump(jnet, f, ensure_ascii=False, indent=4)

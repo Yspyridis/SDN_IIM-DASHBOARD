@@ -117,20 +117,23 @@ def euclidean_distances(x, all_vec):
 ########################### load grid model #####################################
 
 # get AIDB token ##################################################
+print("Connecting to AIDB API at ""api.prod.gridpilot.tech", 8085"...")
 # conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
-# payload = 'username=0INF.UC1&password=0INFUC1&grant_type=password'
+# payload = 'username=****&password=****&grant_type=password'
 # headers = {
 #   'Content-Type': 'application/x-www-form-urlencoded',
 #   'Authorization': 'Basic Z3JpZHBpbG90Oi1xMy1zRmtud0o='
 # }
+print("Requeting token...")
 # conn.request("POST", "/oauth/token", payload, headers)
 # res = conn.getresponse()
 # data = res.read()
-# print(data.decode("utf-8"))
+# # print(data.decode("utf-8"))
 # aidb_token = data.decode("utf-8")
 
 # input("Token received. Press enter to continue...")
-###################################################################
+print("Token received")
+##################################################################
 
 # get AIDB asset ##################################################
 # conn = http.client.HTTPSConnection("api.prod.gridpilot.tech", 8085)
@@ -139,12 +142,14 @@ def euclidean_distances(x, all_vec):
 #   'Content-Type': 'application/json',
 #   'Authorization': aidb_token
 # }
+print("Requeting grid asset...")
 # conn.request("GET", "/assetInventory/search?installations=NO&elements=YES&downstream=YES&topology=YES", payload, headers)
 # res = conn.getresponse()
 # data = res.read()
 # print(data.decode("utf-8"))
 
 # input("Grid received. Press enter to continue...")
+print("Grid model received")
 ###################################################################
 
 # manual grid model
@@ -786,11 +791,11 @@ rmq_json['payload']   = json_data # messes up the format, like twice dumps does
 
 final_json = json.dumps(rmq_json)
 # final_json = json.dumps(json_data)
-print(final_json)
+# print(final_json)
 
 # saved_rmqjson = pp.to_json(rmq_json, filename='rmq_json.json', encryption_key=None)
 # print(rmq_json)
-input("Press enter to send json to rabbitmq...")
+# input("Press enter to send json to rabbitmq...")
 
 # with open('data1.json', 'w', encoding='utf-8') as f:
 #     json.dump(jnet, f, ensure_ascii=False, indent=4)

@@ -1,0 +1,33 @@
+Please, take a look of the readme file with the instructions and use the following group IDs for your tools, in order to avoid
+interference: [aidb, edae, ariec, otsc, mlst, blochain] For your tests, you can use different versions e.g. aidb_1, aidb_2 etc.
+
+# Kafka Consumer
+
+## Install Kafka library (Debian/Ubuntu)
+
+git clone https://github.com/edenhill/librdkafka.git
+cd librdkafka/
+./configure --install-deps
+make
+sudo make install
+
+## Install Python Client locally
+
+pip3 install confluent-kafka
+sudo ldconfig
+
+### Run kafka consumer script
+
+python3 kafka-consumer.py <bootstrap-brokers> <group> <offset> <topic> ..
+
+e.g: python3 kafka-consumer.py sdnmsense-s-raf-server.eurodyn.com:9092 sraf_1 earliest riskassessment
+
+### Specifications about suggested input
+
+-- <bootstrap-brokers> is the kafka instance in SDN-microSENSE this is the sdnmsense-s-raf-server.eurodyn.com:9092
+
+-- <group> is the client group id string. Each partner should have a different <group> so there won't be any interference between the pipelines. Please use a string that contains the name of your tool to avoid usage of the same group (e.g. sraf_1 or edae_1 etc.). Keep in mind that if a record has already been dumped in our specified group, it can't be shown again. If you want to list the risk assessments once more, a new group is needed (e.g. sraf_2).
+
+-- <offset> is the pointer to the output to be returned. The value could be either "earliest" or "latest". The "earliest" automatically reset the offset to the first risk assessment. This basically returns all the produced risk assessments. The "latest" automatically reset the offset to the latest risk assessment added to our topic that hasn't been dumped yet.
+
+-- <topic> is the topic to be consumed. In our case is the "riskassessment".

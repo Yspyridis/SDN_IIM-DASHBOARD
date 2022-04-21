@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import pandapower.plotting as plot
 import pandapower.networks as nw
 import pandapower as pp
@@ -151,6 +152,8 @@ print("Requeting grid asset...")
 # input("Grid received. Press enter to continue...")
 print("Grid model received")
 ###################################################################
+
+# net = data
 
 # manual grid model
 net = pp.from_json('gridmodel-alkyonis-2.json')

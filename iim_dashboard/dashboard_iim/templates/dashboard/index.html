@@ -252,7 +252,7 @@
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-12 col-lg-12">
+                            <div class="col-md-12 col-lg-6">
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
@@ -260,15 +260,13 @@
                                             Grid interactive before
                                         </div>
                                     </div>
-                                    <!-- <div class="card-body text-center" style="height:400px"> -->
-                                        <div class="center_right" style="width:90%; height:500px" id="1312"></div>
-                                    <!-- </div> -->
+                                    <div class="center_right" style="width:90%; height:500px" id="plot_before"></div>
                                 </div>
                             </div>
-                        </div>
+                        <!-- </div>
 
-                        <div class="row">
-                            <div class="col-md-12 col-lg-8">
+                        <div class="row"> -->
+                            <div class="col-md-12 col-lg-6">
 
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
@@ -277,12 +275,10 @@
                                             Grid interactive after
                                         </div>
                                     </div>
-                                    <!-- <div class="card-body text-center" style="height:400px"> -->
-                                        <div class="center_right" style="width:90%; height:500px" id="1331"></div>
-                                    <!-- </div> -->
+                                    <div class="center_right" style="width:90%; height:500px" id="plot_after"></div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-4">
+                            <!-- <div class="col-md-12 col-lg-4">
 
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
@@ -294,7 +290,7 @@
                                     <button class="center_right" id="set_button_i111">click</button>
                                     
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
@@ -326,21 +322,44 @@
         $("#grid_initial_1").attr("src", "");
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
 
-        // url0 = "{% static 'grid_initial/interactive-plot_before.html' %}";
-        // $('#1312').load(url0);
+        url_before = "{% static 'grid_initial/interactive-plot_before.html' %}";
+        $('#plot_before').load(url_before);
+
         // url_after = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
-        // $('#interactive_plot_after').load(url_before);
+        // $('#001').load(url_after);
+
         // getIslandingPlot('GAP');
         getNumericalResults('GAP');
     });
 
-    $("#set_button_i111").on('click', async function(e) {
+    // $("#set_button_i111").on('click', async function(e) {
+    //     console.log('clicked');
+    //     url0 = "{% static 'grid_initial/interactive-plot_before.html' %}";
+    //     url4 = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
 
-    // url4 = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
-    // $('#1331').load("{% static 'grid_after_islanding/interactive-plot_GAP.html' %}");
-    // $( "#1331" ).load("{% static 'grid_after_islanding/interactive-plot_GAP.html' %}");
-    getIslandingPlot('GAP');
-    });
+    //     $( "#001" ).load( url0, function() {
+    //         $('#000').load(url4);
+    //     }); 
+        
+    //     // $('#1312').load(url0);
+    //     // // $('#1331').load(url4);
+    //     // setTimeout(function() {
+    //     //     // $('#1331').load(url4);
+    //     //     console.log('finished');
+    //     //     // $('#1312').load(url0);
+    //     // }, 3000);  
+        
+    //     // console.log('started');
+    //     // $( "#1331" ).load( url4, function() {
+    //     //     alert( "Load was performed." );
+    //     // }); 
+    //     // $("#1312").load($(this).attr(url0),function(){
+    //     //     resizeDivs();
+    //     //     $('#1331').text("{% static 'grid_after_islanding/interactive-plot_GAP.html' %}");
+    //     // });
+
+    // // getIslandingPlot('GAP');
+    // });
 
     $("#gap").on('click', async function(e) {
 
@@ -407,14 +426,14 @@
                     url2= "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
                     url3= "{% static 'grid_after_islanding/interactive-plot2_GAP.html' %}";
 
-                    url4="{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
+                    url_after="{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
                 }
                 else if (method == 'MIN-CUT') {
                     url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}";
                     url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
                     url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}";
 
-                    url4="{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
+                    url_after="{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
                 }
                 // else if (method == 'OTSC IIM') {
                 //     url = "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}"
@@ -427,10 +446,7 @@
 
                 $("#grid_after").attr("src", url);
 
-                url0 = "{% static 'grid_initial/interactive-plot_before.html' %}";
-                $('#1312').load(url0);
-
-                $('#1331').load("{% static 'grid_after_islanding/interactive-plot_GAP.html' %}");
+                $('#plot_after').load(url_after);
 
 
                 // $('#interactive_plot').load(url2);

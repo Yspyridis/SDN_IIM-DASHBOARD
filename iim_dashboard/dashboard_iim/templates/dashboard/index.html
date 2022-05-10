@@ -217,7 +217,7 @@
                             
                         </div>
 
-                       <div class="row">
+                       <!-- <div class="row">
                             <div class="col-md-12 col-lg-12">
                                 <div style="width:100%; height:auto" class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
@@ -231,22 +231,72 @@
                                     </div>
                                 </div>
                             </div>
-                          </div>
+                        </div> -->
+
                         <div class="row">
                             <div class="col-md-12 col-lg-12">
                                 <div style="width:100%; height:auto" class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
-                                            Interactive Plot 2
+                                            Interactive Plot
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                      <div class="center" id="interactive_plot2"></div>
+                                        <div class="center_right" style="width:90%; max-height:600px" id="interactive_plot2"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header-tab-animation card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                                            Grid interactive before
+                                        </div>
+                                    </div>
+                                    <!-- <div class="card-body text-center" style="height:400px"> -->
+                                        <div class="center_right" style="width:90%; height:500px" id="1312"></div>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-8">
+
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header-tab-animation card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                                            Grid interactive after
+                                        </div>
+                                    </div>
+                                    <!-- <div class="card-body text-center" style="height:400px"> -->
+                                        <div class="center_right" style="width:90%; height:500px" id="1331"></div>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-4">
+
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header-tab-animation card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                                            button
+                                        </div>
+                                    </div>
+                                    <button class="center_right" id="set_button_i111">click</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="app-wrapper-footer">
                         <div class="app-footer">
@@ -260,6 +310,7 @@
 
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/jquery.min.js' %}"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script type="text/javascript" src="{% static 'dashboard/js/vis.js' %}"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <!-- <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script> -->
@@ -269,16 +320,27 @@
     $(document).ready(function () {
 
         // postIslandingPlot();
-        getIslandingPlot('GAP');
-        getNumericalResults('GAP');
+        // getIslandingPlot('GAP');
+        // getNumericalResults('GAP');
 
         $("#grid_initial_1").attr("src", "");
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
 
-        // url0= "{% static 'grid_after_islanding/initial2.html' %}"
-        // $('#interactive_plot').load(url0);
+        // url0 = "{% static 'grid_initial/interactive-plot_before.html' %}";
+        // $('#1312').load(url0);
+        // url_after = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
+        // $('#interactive_plot_after').load(url_before);
+        // getIslandingPlot('GAP');
+        getNumericalResults('GAP');
     });
 
+    $("#set_button_i111").on('click', async function(e) {
+
+    // url4 = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
+    // $('#1331').load("{% static 'grid_after_islanding/interactive-plot_GAP.html' %}");
+    // $( "#1331" ).load("{% static 'grid_after_islanding/interactive-plot_GAP.html' %}");
+    getIslandingPlot('GAP');
+    });
 
     $("#gap").on('click', async function(e) {
 
@@ -296,13 +358,13 @@
         getNumericalResults('MIN-CUT');
     });
     
-    $("#otsc").on('click', async function(e) {
+    // $("#otsc").on('click', async function(e) {
 
-        getIslandingPlot('OTSC IIM');
-        $(".dropdown-menu").removeClass('show');
+    //     getIslandingPlot('OTSC IIM');
+    //     $(".dropdown-menu").removeClass('show');
 
-        getNumericalResults('OTSC IIM');
-    });
+    //     getNumericalResults('OTSC IIM');
+    // });
 
     // function postIslandingPlot() {
 
@@ -341,27 +403,43 @@
 				// console.log(data);
 
                 if (method == 'GAP') {
-                    url = "{% static 'grid_after_islanding/grid_after_GAP.png' %}"
-                    url2= "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}"
-                    url3= "{% static 'grid_after_islanding/interactive-plot2_GAP.html' %}"
+                    url = "{% static 'grid_after_islanding/grid_after_GAP.png' %}";
+                    url2= "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
+                    url3= "{% static 'grid_after_islanding/interactive-plot2_GAP.html' %}";
+
+                    url4="{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
                 }
                 else if (method == 'MIN-CUT') {
-                    url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}"
-                    url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}"
-                    url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}"
+                    url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}";
+                    url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
+                    url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}";
+
+                    url4="{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
                 }
-                else if (method == 'OTSC IIM') {
-                    url = "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}"
-                    url2= "{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}"
-                    url3= "{% static 'grid_after_islanding/interactive-plot2_OTSC IIM.html' %}"
-                    // url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}"
-                    // url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}"
-                    // url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}"
-                }
+                // else if (method == 'OTSC IIM') {
+                //     url = "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}"
+                //     url2= "{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}"
+                //     url3= "{% static 'grid_after_islanding/interactive-plot2_OTSC IIM.html' %}"
+                //     // url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}"
+                //     // url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}"
+                //     // url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}"
+                // }
 
                 $("#grid_after").attr("src", url);
-                $('#interactive_plot').load(url2);
-                $('#interactive_plot2').load(url3);
+
+                url0 = "{% static 'grid_initial/interactive-plot_before.html' %}";
+                $('#1312').load(url0);
+
+                $('#1331').load("{% static 'grid_after_islanding/interactive-plot_GAP.html' %}");
+
+
+                // $('#interactive_plot').load(url2);
+                // $('#interactive_plot2').load(url3);
+                // console.log('int plot after is', url_after, 'trying to set it');
+                // $('#ipafter').load(url_after);
+                // setTimeout(() => { document.getElementById("ipafter").innerHTML='<object type="text/html" data=url_after ></object>'; }, 5000);
+                
+                // $('#interactive_plot_after').load(url_after);
             },
 			complete:function(data){
 			},
@@ -384,19 +462,19 @@
 				
 				var d1 = data[0]['date'];
 				var d2 = data[1]['date'];
-				var d3 = data[2]['date'];
+				// var d3 = data[2]['date'];
 
 				var date1 = new Date(d1);
 				var date2 = new Date(d2);
-                var date3 = new Date(d3);
+                // var date3 = new Date(d3);
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'];
                 var island_imbalance2 = data[1]['island_imbalance_after_cut'];
-                var island_imbalance3 = data[2]['island_imbalance_after_cut'];
+                // var island_imbalance3 = data[2]['island_imbalance_after_cut'];
 
                 console.log(island_imbalance1);
                 console.log(island_imbalance2);
-                console.log(island_imbalance3);
+                // console.log(island_imbalance3);
 
                 // cut decimals from the array
                 var x = 0;
@@ -409,61 +487,23 @@
                         island_imbalance2[x] = parseFloat( (island_imbalance2[x]) ).toFixed(2); 
                     }
                     island_imbalance2[x] = parseFloat( (island_imbalance2[x]) ).toFixed(2);
-                    island_imbalance3[x] = parseFloat( (island_imbalance3[x]) ).toFixed(2); 
+                    // island_imbalance3[x] = parseFloat( (island_imbalance3[x]) ).toFixed(2); 
                     x++;
                 }
 
                 // convert to string to replace commas with |
                 island_imbalance1  = island_imbalance1.toString();   
                 island_imbalance2  = island_imbalance2.toString();   
-                island_imbalance3  = island_imbalance3.toString();  
+                // island_imbalance3  = island_imbalance3.toString();  
                 
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
                 var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
-                var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+                // var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 // console.log(data);
 
                 // UNCOMMENT FOR TWO METHODS
-                // if (method == 'MIN-CUT') {
-                //     $("#method").text(data[0]['method_name']);
-                //     $("#date").text(date1.toLocaleString());
-                //     $("#lines").text(data[0]['lines_to_cut']);
-                //     $("#island_imbalance").text(final_isl_imb1);
-                //     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
-                //     $("#total_imbalance").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                //     $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
-                // }
-                // else if (method == 'GAP') {
-                //     $("#method").text(data[1]['method_name']);
-                //     $("#date").text(date2.toLocaleString());
-                //     $("#lines").text(data[1]['lines_to_cut']);
-                //     $("#island_imbalance").text(final_isl_imb2);
-                //     // $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
-                //     $("#total_imbalance").text( (data[1]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                //     $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
-                // }
-
-                // UNCOMMENT FOR THREE METHODS
                 if (method == 'MIN-CUT') {
-                    $("#method").text(data[1]['method_name']);
-                    $("#date").text(date2.toLocaleString());
-                    $("#lines").text(data[1]['lines_to_cut']);
-                    $("#island_imbalance").text(final_isl_imb2);
-                    // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
-                    $("#total_imbalance").text( (data[1]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                    $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
-                }
-                else if (method == 'GAP') {
-                    $("#method").text(data[2]['method_name']);
-                    $("#date").text(date3.toLocaleString());
-                    $("#lines").text(data[2]['lines_to_cut']);
-                    $("#island_imbalance").text(final_isl_imb3);
-                    // $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
-                    $("#total_imbalance").text( (data[2]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                    $("#clusters").text(data[2]['island_imbalance_after_cut'].length);
-                }
-                else if (method == 'OTSC IIM') {
                     $("#method").text(data[0]['method_name']);
                     $("#date").text(date1.toLocaleString());
                     $("#lines").text(data[0]['lines_to_cut']);
@@ -472,6 +512,44 @@
                     $("#total_imbalance").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
                     $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
                 }
+                else if (method == 'GAP') {
+                    $("#method").text(data[1]['method_name']);
+                    $("#date").text(date2.toLocaleString());
+                    $("#lines").text(data[1]['lines_to_cut']);
+                    $("#island_imbalance").text(final_isl_imb2);
+                    // $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
+                    $("#total_imbalance").text( (data[1]['total_imbalance_after_cut']*(-1)).toFixed(2) );
+                    $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
+                }
+
+                // UNCOMMENT FOR THREE METHODS
+                // if (method == 'MIN-CUT') {
+                //     $("#method").text(data[1]['method_name']);
+                //     $("#date").text(date2.toLocaleString());
+                //     $("#lines").text(data[1]['lines_to_cut']);
+                //     $("#island_imbalance").text(final_isl_imb2);
+                //     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                //     $("#total_imbalance").text( (data[1]['total_imbalance_after_cut']*(-1)).toFixed(2) );
+                //     $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
+                // }
+                // else if (method == 'GAP') {
+                //     $("#method").text(data[2]['method_name']);
+                //     $("#date").text(date3.toLocaleString());
+                //     $("#lines").text(data[2]['lines_to_cut']);
+                //     $("#island_imbalance").text(final_isl_imb3);
+                //     // $("#total_imbalance").text( parseInt(data[1]['total_imbalance_after_cut']) );
+                //     $("#total_imbalance").text( (data[2]['total_imbalance_after_cut']*(-1)).toFixed(2) );
+                //     $("#clusters").text(data[2]['island_imbalance_after_cut'].length);
+                // }
+                // else if (method == 'OTSC IIM') {
+                //     $("#method").text(data[0]['method_name']);
+                //     $("#date").text(date1.toLocaleString());
+                //     $("#lines").text(data[0]['lines_to_cut']);
+                //     $("#island_imbalance").text(final_isl_imb1);
+                //     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                //     $("#total_imbalance").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
+                //     $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
+                // }
 
         
 			},

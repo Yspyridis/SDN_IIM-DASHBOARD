@@ -33,6 +33,8 @@ from rest_framework import status
 from islanding.serializers import IslandingSchemeSerializer
 from rest_framework.decorators import api_view
 
+from copy import deepcopy
+
 
 @api_view(['GET'])
 def islanding_plot(request):
@@ -52,10 +54,22 @@ def islanding_plot(request):
     # print(fgrid2)
     net_after = pp.from_json('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt')
 
-    pp.plotting.simple_plot(net_after, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
-    plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
+    # net = deepcopy(net_after)
+    # Use below line to:
+    # set the backend to a non-interactive one so that the server does not try to create (and then destroy) GUI windows that will never be seen 
+    plt.switch_backend('Agg')
 
+    # print('1')
+    # input('1')
+    pp.plotting.simple_plot(net_after, respect_switches=False, line_width=1.0, bus_size=1.0, ext_grid_size=1.0, trafo_size=1.0, plot_loads=False, plot_sgens=False, load_size=1.0, sgen_size=1.0, switch_size=2.0, switch_distance=1.0, plot_line_switches=False, scale_size=True, bus_color='b', line_color='grey', trafo_color='k', ext_grid_color='y', switch_color='k', library='igraph', show_plot=False, ax=None)
+    # print('2')
+    # input('2')
+    plt.savefig('islanding/iim_mlst/static/grid_after_islanding/grid_after_'+method+'.png')
+    # print('3')
+    # input('3')
     pp.plotting.to_html(net_after, filename='islanding/iim_mlst/static/grid_after_islanding/interactive-plot_'+method+'.html', show_tables=False)
+    # print('4')
+    # input('4')
     # comment the line below to stop annoying popup with html plot
     # simple_plotly_gen(net_after, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
@@ -80,8 +94,8 @@ def islanding_result(request):
         # Now query the results without the grid
         # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
         # results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
-        results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:3].values(*fields)
-        # results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:2].values(*fields)
+        # results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:3].values(*fields)
+        results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:2].values(*fields)
         # print('the results are ')
         # print(results)
         df = pd.DataFrame(data=results)
@@ -108,8 +122,8 @@ def islanding_result(request):
     
         # Now query the results without the grid
         # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
-        # results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
-        results = IslandingScheme.objects.all().order_by('-id')[:3].values(*fields)
+        results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
+        # results = IslandingScheme.objects.all().order_by('-id')[:3].values(*fields)
         # results = IslandingScheme.objects.filter(date__contains=request_date).values(*fields)
         # print('the results are ')
         # print(results)

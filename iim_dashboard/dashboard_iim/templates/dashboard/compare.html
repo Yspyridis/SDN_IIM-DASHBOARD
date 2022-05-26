@@ -85,7 +85,7 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">IIM</li>
                                 <li><a class="mm" href="{% url 'dashboard_iim:index' %}"><i class="metismenu-icon pe-7s-graph2"></i>Grid Status</a></li>
-                                <li><a class="mm-active" href="{% url 'dashboard_iim:compare' %}"><i class="metismenu-icon pe-7s-graph2"></i>Method Comparison</a></li>
+                                <li><a class="mm-active" href="{% url 'dashboard_iim:compare' %}"><i class="metismenu-icon pe-7s-graph2"></i>Historic Results</a></li>
                             </ul>
                         </div>
                     </div>
@@ -110,11 +110,11 @@
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
-                                            MLST: MIN-CUT
+                                            Initial Grid
                                         </div>
                                     </div>
                                     <div class="card-body text-center" style="height:400px">
-                                      <img id="islanding_min-cut" style="max-width:90%; max-height:100%;"></img>
+                                      <img id="grid_initial_1" style="max-width:90%; max-height:100%;"></img>
                                     </div>
                                 </div>
                             </div>
@@ -123,27 +123,14 @@
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
-                                            MLST: GAP
+                                            Islanding result
                                         </div>
                                     </div>
                                     <div class="card-body text-center" style="height:400px">
-                                      <img id="islanding_gap" style="max-width:90%; max-height:100%;"></img>
+                                      <img id="grid_after" style="max-width:90%; max-height:100%;"></img>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-12 col-lg-4">
-                                <div class="mb-3 card">
-                                    <div class="card-header-tab card-header-tab-animation card-header">
-                                        <div class="card-header-title">
-                                            <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
-                                            OTSC
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center" style="height:400px">
-                                      <img id="islanding_otsc" style="max-width:90%; max-height:100%;"></img>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
 
                         <div class="row">
@@ -174,14 +161,14 @@
                                               <td id='cluster_no1' class=""></td>
                                             </tr>
 
-                                            <tr>
+                                            <!-- <tr>
                                               <td id='method2' class=" text-muted"></td>
                                               <td id='date2' class=""></td>
                                               <td id='lines2' class=""></td>
                                               <td id='imb_after2' class=""></td>
                                               <td id='total_imb2' class=""></td>
                                               <td id='cluster_no2' class=""></td>
-                                            </tr>
+                                            </tr> -->
 
                                             <!-- <tr>
                                               <td id='method3' class=" text-muted">OTSC</td>
@@ -223,9 +210,8 @@
 		
         getNumericalResults(date);
 
-        $("#islanding_min-cut").attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
-        $('#islanding_gap').attr("src", "{% static 'grid_after_islanding/grid_after_GAP.png' %}");
-        $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC.png' %}");
+        $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
+        $('#grid_after').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}");
     });
     
     // returns the date in 2 digit format
@@ -271,23 +257,22 @@
         $("#total_imb1").text('-');
         $("#cluster_no1").text('-');
 
-        $("#method2").text('-');
-        $("#date2").text('-');
-        $("#lines2").text('-');
-        $("#imb_after2").text('-');
-        $("#total_imb2").text('-');
-        $("#cluster_no2").text('-');
+        // $("#method2").text('-');
+        // $("#date2").text('-');
+        // $("#lines2").text('-');
+        // $("#imb_after2").text('-');
+        // $("#total_imb2").text('-');
+        // $("#cluster_no2").text('-');
         
-        $("#method3").text('-');
-        $("#date3").text('-');
-        $("#lines3").text('-');
-        $("#imb_after3").text('-');
-        $("#total_imb3").text('-');
-        $("#cluster_no3").text('-');
+        // $("#method3").text('-');
+        // $("#date3").text('-');
+        // $("#lines3").text('-');
+        // $("#imb_after3").text('-');
+        // $("#total_imb3").text('-');
+        // $("#cluster_no3").text('-');
         
-        $("#islanding_min-cut").attr("src", "");
-        $('#islanding_gap').attr("src", "");
-        $('#islanding_otsc').attr("src", "");
+        $("#grid_initial_1").attr("src", "");
+        $('#grid_after').attr("src", "");
 	}
 	
     function getNumericalResults(date) {
@@ -304,40 +289,31 @@
 				console.log(data);
 				
 				var d1 = data[0]['date'];
-				var d2 = data[1]['date'];
-				// var d3 = data[2]['date'];
 
 				var date1 = new Date(d1);
-				var date2 = new Date(d2);
-                // var date3 = new Date(d3);
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'];
-                var island_imbalance2 = data[1]['island_imbalance_after_cut'];
-                // var island_imbalance3 = data[2]['island_imbalance_after_cut'];
 
                 // cut decimals from the array
-                var x = 0;
-                // var len = 4;
-                var len = island_imbalance1.length;
+                // var x = 0;
+                // // var len = 4;
+                // var len = island_imbalance1.length;
                 
-                while(x < len) { 
-                    // if(x !=2) {
-                        island_imbalance1[x] = (island_imbalance1[x]).toFixed(2); 
-                        island_imbalance2[x] = (island_imbalance2[x]).toFixed(2); 
-                    // }
-                    // island_imbalance2[x] = (island_imbalance2[x]).toFixed(2); 
-                    // island_imbalance3[x] = (island_imbalance3[x]).toFixed(2); 
-                    x++;
-                }
+                // while(x < len) { 
+                //     // if(x !=2) {
+                //         island_imbalance1[x] = (island_imbalance1[x]).toFixed(2); 
+                //         island_imbalance2[x] = (island_imbalance2[x]).toFixed(2); 
+                //     // }
+                //     // island_imbalance2[x] = (island_imbalance2[x]).toFixed(2); 
+                //     // island_imbalance3[x] = (island_imbalance3[x]).toFixed(2); 
+                //     x++;
+                // }
 
+                island_imbalance1[0] = (island_imbalance1[0]).toFixed(2);
                 // convert to string to replace commas with |
-                island_imbalance1  = island_imbalance1.toString();   
-                island_imbalance2  = island_imbalance2.toString();   
-                // island_imbalance3  = island_imbalance3.toString();  
+                island_imbalance1  = island_imbalance1.toString(); 
                 
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
-                var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
-                // var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
 
                 $("#method1").text(data[0]['method_name']);
                 $("#date1").text(date1.toLocaleString());
@@ -346,24 +322,8 @@
                 $("#total_imb1").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
                 $("#cluster_no1").text(data[0]['island_imbalance_after_cut'].length);
 
-                $("#method2").text(data[1]['method_name']);
-                $("#date2").text(date2.toLocaleString());
-                $("#lines2").text(data[1]['lines_to_cut']);
-                $("#imb_after2").text(final_isl_imb2);
-                $("#total_imb2").text( (data[1]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                $("#cluster_no2").text(data[1]['island_imbalance_after_cut'].length);
-
-                // UNCOMMENT FOR THREE METHODS
-                // $("#method3").text(data[2]['method_name']);
-                // $("#date3").text(date3.toLocaleString());
-                // $("#lines3").text(data[2]['lines_to_cut']);
-                // $("#imb_after3").text(final_isl_imb3);
-                // $("#total_imb3").text( (data[2]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                // $("#cluster_no3").text(data[2]['island_imbalance_after_cut'].length);
-                
-                // $("#islanding_min-cut").attr("src", "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}");
-                // $('#islanding_gap').attr("src", "{% static 'grid_after_islanding/grid_after_GAP.png' %}");
-                // $('#islanding_otsc').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}");
+                $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
+                $('#grid_after').attr("src", "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}");
 			},
 			complete:function(data){
 			},

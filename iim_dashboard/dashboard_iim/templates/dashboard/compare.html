@@ -293,12 +293,37 @@
 				var date1 = new Date(d1);
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'];
+                var island_imbalance2 = data[1]['island_imbalance_after_cut'];
+                var island_imbalance3 = data[2]['island_imbalance_after_cut'];
 
-                island_imbalance1[0] = (island_imbalance1[0]).toFixed(2);
+                console.log(island_imbalance1);
+                console.log(island_imbalance2);
+                console.log(island_imbalance3);
+
+                // cut decimals from the array
+                var x = 0;
+                // var len = 4;
+                var len = island_imbalance1.length;
+                
+                while(x < len) { 
+                    if(x !=2) {
+                        island_imbalance1[x] = parseFloat( (island_imbalance1[x]) ).toFixed(2); 
+                        island_imbalance2[x] = parseFloat( (island_imbalance2[x]) ).toFixed(2); 
+                    }
+                    island_imbalance2[x] = parseFloat( (island_imbalance2[x]) ).toFixed(2);
+                    island_imbalance3[x] = parseFloat( (island_imbalance3[x]) ).toFixed(2); 
+                    x++;
+                }
+
                 // convert to string to replace commas with |
-                island_imbalance1  = island_imbalance1.toString(); 
+                island_imbalance1  = island_imbalance1.toString();   
+                island_imbalance2  = island_imbalance2.toString();   
+                island_imbalance3  = island_imbalance3.toString();  
                 
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
+                var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
+                var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+
 
                 $("#method1").text(data[0]['method_name']);
                 $("#date1").text(date1.toLocaleString());

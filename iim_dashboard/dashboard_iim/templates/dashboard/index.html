@@ -418,6 +418,12 @@
 				var date1 = new Date(d1);
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'];
+                var island_imbalance2 = data[1]['island_imbalance_after_cut'];
+                var island_imbalance3 = data[2]['island_imbalance_after_cut'];
+
+                console.log(island_imbalance1);
+                console.log(island_imbalance2);
+                console.log(island_imbalance3);
 
                 // cut decimals from the array
                 var x = 0;
@@ -435,9 +441,14 @@
                 }
 
                 // convert to string to replace commas with |
-                island_imbalance1  = island_imbalance1.toString();
+                island_imbalance1  = island_imbalance1.toString();   
+                island_imbalance2  = island_imbalance2.toString();   
+                island_imbalance3  = island_imbalance3.toString();  
                 
                 var final_isl_imb1 = island_imbalance1.replace(/,/g, ' | ');
+                var final_isl_imb2 = island_imbalance2.replace(/,/g, ' | ');
+                var final_isl_imb3 = island_imbalance3.replace(/,/g, ' | ');
+
 
                 // console.log(data);
 

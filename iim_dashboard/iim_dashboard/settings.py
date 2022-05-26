@@ -175,7 +175,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media/')
 #     os.path.join(BASE_DIR, 'islanding/iim_mlst/static/'),
 # ]
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'dashboard_iim/static/',
-#     'islanding/iim_mlst/static/',
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / 'dashboard_iim/static/',
+    'islanding/iim_mlst/static/',
+]

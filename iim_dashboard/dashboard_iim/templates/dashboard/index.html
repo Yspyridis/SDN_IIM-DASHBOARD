@@ -337,7 +337,7 @@
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
 
         url_before = "{% static 'grid_initial/interactive-plot_before.html' %}";
-        url_after = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
+        url_after = "{% static 'grid_after_islanding/interactive-plot_OTSC.html' %}";
 
         $('#plot_before').load(url_before);
         $('#plot_after').load(url_after);
@@ -350,8 +350,8 @@
         //     alert("Error: " + xhr.status + ": " + xhr.statusText);
         // });
 
-        getIslandingPlot('GAP');
-        getNumericalResults('GAP');
+        getIslandingPlot('OTSC IIM');
+        getNumericalResults('OOTSC IIMTSC');
     });
 
     // $("#set_button_i111").on('click', async function(e) {

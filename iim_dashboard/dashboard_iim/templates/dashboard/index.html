@@ -338,7 +338,7 @@
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
 
         url_before = "{% static 'grid_initial/interactive-plot_before.html' %}";
-        url_after = "{% static 'grid_after_islanding/interactive-plot_OTSC.html' %}";
+        url_after = "{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
 
         $('#plot_before').load(url_before);
         $('#plot_after').load(url_after);
@@ -352,7 +352,7 @@
         // });
 
         getIslandingPlot('OTSC IIM');
-        getNumericalResults('OOTSC IIMTSC');
+        getNumericalResults('OTSC IIM');
     });
 
     // $("#set_button_i111").on('click', async function(e) {
@@ -446,10 +446,10 @@
                 // if (method == 'GAP') {
                 if (method == 'OTSC IIM') {
                     url = "{% static 'grid_after_islanding/grid_after_OTSC.png' %}";
-                    url2= "{% static 'grid_after_islanding/interactive-plot_OTSC.html' %}";
+                    url2= "{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
                     url3= "{% static 'grid_after_islanding/interactive-plot2_OTSC.html' %}";
 
-                    url_after="{% static 'grid_after_islanding/interactive-plot_OTSC.html' %}";
+                    url_after="{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
                 }
                 // else if (method == 'MIN-CUT') {
                 //     url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}";

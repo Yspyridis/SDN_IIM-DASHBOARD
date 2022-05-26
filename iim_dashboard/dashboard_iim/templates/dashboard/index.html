@@ -419,7 +419,20 @@
 
                 var island_imbalance1 = data[0]['island_imbalance_after_cut'];
 
-                island_imbalance1[0] = parseFloat( (island_imbalance1[0]) ).toFixed(2)
+                // cut decimals from the array
+                var x = 0;
+                // var len = 4;
+                var len = island_imbalance1.length;
+                
+                while(x < len) { 
+                    if(x !=2) {
+                        island_imbalance1[x] = parseFloat( (island_imbalance1[x]) ).toFixed(2); 
+                        island_imbalance2[x] = parseFloat( (island_imbalance2[x]) ).toFixed(2); 
+                    }
+                    island_imbalance2[x] = parseFloat( (island_imbalance2[x]) ).toFixed(2);
+                    island_imbalance3[x] = parseFloat( (island_imbalance3[x]) ).toFixed(2); 
+                    x++;
+                }
 
                 // convert to string to replace commas with |
                 island_imbalance1  = island_imbalance1.toString();

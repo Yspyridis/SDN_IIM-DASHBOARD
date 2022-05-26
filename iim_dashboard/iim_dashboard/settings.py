@@ -26,8 +26,8 @@ SECRET_KEY = '((06qd(5c0*=5()*hjn+iqesz)3man#u9x)x^i3m9o93i2)ikk'
 # SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # The first IP is to check API on local network and should be removed
 # ALLOWED_HOSTS = ['mlst-iim-server.eurodyn.com', '10.250.100.60', '192.168.1.161', '192.168.1.150','localhost', '127.0.0.1']
@@ -170,12 +170,12 @@ print('STATIC_ROOT: ', STATIC_ROOT)
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR, 'media/')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dashboard/static/'),
-    os.path.join(BASE_DIR, 'islanding/iim_mlst/static/'),
-]
-
 # STATICFILES_DIRS = [
-#     BASE_DIR / 'dashboard_iim/static/',
-#     'islanding/iim_mlst/static/',
+#     os.path.join(BASE_DIR, 'dashboard/static/'),
+#     os.path.join(BASE_DIR, 'islanding/iim_mlst/static/'),
 # ]
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'dashboard_iim/static/',
+    'islanding/iim_mlst/static/',
+]

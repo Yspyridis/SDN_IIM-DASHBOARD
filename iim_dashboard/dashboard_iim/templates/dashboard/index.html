@@ -555,15 +555,15 @@
                 // }
 
                 // UNCOMMENT FOR THREE METHODS
-                // if (method == 'MIN-CUT') {
-                //     $("#method").text(data[1]['method_name']);
-                //     $("#date").text(date2.toLocaleString());
-                //     $("#lines").text(data[1]['lines_to_cut']);
-                //     $("#island_imbalance").text(final_isl_imb2);
-                //     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
-                //     $("#total_imbalance").text( (data[1]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                //     $("#clusters").text(data[1]['island_imbalance_after_cut'].length);
-                // }
+                if (method == 'MIN-CUT') {
+                    $("#method").text(data[0]['method_name']);
+                    $("#date").text(date2.toLocaleString());
+                    $("#lines").text(data[0]['lines_to_cut']);
+                    $("#island_imbalance").text(final_isl_imb2);
+                    // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
+                    $("#total_imbalance").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
+                    $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
+                }
                 // else if (method == 'GAP') {
                 //     $("#method").text(data[2]['method_name']);
                 //     $("#date").text(date3.toLocaleString());

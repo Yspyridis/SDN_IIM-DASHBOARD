@@ -72,7 +72,7 @@ def islanding_plot(request):
     # print('4')
     # input('4')
     # comment the line below to stop annoying popup with html plot
-    # simple_plotly_gen(net_after, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
+    simple_plotly_gen(net_after, file_name='islanding/iim_mlst/static/grid_after_islanding/interactive-plot2_'+method+'.html')
 
     os.remove('islanding/iim_mlst/static/grid_after_islanding/tmp_grid.txt')
     ###########################################################

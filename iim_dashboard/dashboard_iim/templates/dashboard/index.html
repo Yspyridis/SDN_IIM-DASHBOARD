@@ -452,6 +452,7 @@
                     url_after="{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
                 }
                 else if (method == 'MIN-CUT') {
+                    console.log('gets here, method: ', method);
                     url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}";
                     url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
                     url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}";

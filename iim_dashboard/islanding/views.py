@@ -95,7 +95,7 @@ def islanding_result(request):
         # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
         # results = IslandingScheme.objects.all().order_by('-id')[:2].values(*fields)
         # results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:3].values(*fields)
-        results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:1].values(*fields)
+        results = IslandingScheme.objects.filter(date__contains=request_date).order_by('-id')[:0].values(*fields)
         # print('the results are ')
         # print(results)
         df = pd.DataFrame(data=results)
@@ -122,7 +122,7 @@ def islanding_result(request):
     
         # Now query the results without the grid
         # results = IslandingScheme.objects.filter(method=method).order_by('-id')[:1].values(*fields)
-        results = IslandingScheme.objects.all().order_by('-id')[:1].values(*fields)
+        results = IslandingScheme.objects.all().order_by('-id')[:0].values(*fields)
         # results = IslandingScheme.objects.all().order_by('-id')[:3].values(*fields)
         # results = IslandingScheme.objects.filter(date__contains=request_date).values(*fields)
         # print('the results are ')

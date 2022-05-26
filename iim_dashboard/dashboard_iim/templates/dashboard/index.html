@@ -382,13 +382,6 @@
 
                     url_after="{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
                 }
-                else if (method == 'MIN-CUT') {
-                    url = "{% static 'grid_after_islanding/grid_after_MIN-CUT.png' %}";
-                    url2= "{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
-                    url3= "{% static 'grid_after_islanding/interactive-plot2_MIN-CUT.html' %}";
-
-                    url_after="{% static 'grid_after_islanding/interactive-plot_MIN-CUT.html' %}";
-                }
 
                 $("#grid_after").attr("src", url);
                 $("#interactive_plot2").load(url3);
@@ -442,16 +435,6 @@
                     $("#lines").text(data[0]['lines_to_cut']);
                     $("#island_imbalance").text(final_isl_imb1);
                     // $("#total_imbalance").text( parseInt(data[0]['total_imbalance_after_cut']) );
-                    $("#total_imbalance").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
-                    $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
-                }
-           
-                if (method == 'MIN-CUT') {
-                    $("#method").text(data[0]['method_name']);
-                    $("#date").text(date1.toLocaleString());
-                    $("#lines").text(data[0]['lines_to_cut']);
-                    $("#island_imbalance").text(final_isl_imb1);
-                    // $("#total_imbalance").text( parseInt(data[0]['t1tal_imbalance_after_cut']) );
                     $("#total_imbalance").text( (data[0]['total_imbalance_after_cut']*(-1)).toFixed(2) );
                     $("#clusters").text(data[0]['island_imbalance_after_cut'].length);
                 }

@@ -308,27 +308,49 @@
 <script type="text/javascript" src="{% static 'dashboard/js/jquery.min.js' %}"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script type="text/javascript" src="{% static 'dashboard/js/vis.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <!-- <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script> -->
 
 <script>
+    /**
+     * @param {String} url - address for the HTML to fetch
+     * @return {String} the resulting HTML string fragment
+     */
+    async function fetchHtmlAsText(url) {
+        return await (await fetch(url)).text();
+    }
+
+    async function loadHome(id, text) {
+        const contentDiv = document.getElementById(id).innerHTML = await fetchHtmlAsText(text);;
+        // contentDiv.innerHTML = await fetchHtmlAsText("home.html");
+    }
+
+    async function fetchHtmlAsText(url) {
+        const response = await fetch(url);
+        return await response.text();
+    }
 
     $(document).ready(function () {
-
-        // postIslandingPlot();
-        // getIslandingPlot('GAP');
-        // getNumericalResults('GAP');
 
         $("#grid_initial_1").attr("src", "");
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
 
         url_before = "{% static 'grid_initial/interactive-plot_before.html' %}";
+        url_after = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
+
         $('#plot_before').load(url_before);
+        $('#plot_after').load(url_after);
 
-        // url_after = "{% static 'grid_after_islanding/interactive-plot_GAP.html' %}";
-        // $('#001').load(url_after);
 
-        // getIslandingPlot('GAP');
+        // $("#plot_after").load(url_before, function(responseTxt, statusTxt, xhr) {
+        // if(statusTxt == "success")
+        //     alert("External content loaded successfully!");
+        // if(statusTxt == "error")
+        //     alert("Error: " + xhr.status + ": " + xhr.statusText);
+        // });
+
+        getIslandingPlot('GAP');
         getNumericalResults('GAP');
     });
 
@@ -411,7 +433,6 @@
 
         $.ajax({
 			url:"{% url 'islanding:islanding_plot' %}",
-            // url:"/islanding/islanding_result/",
 			type: "GET",
 			data: {
 			    method: method
@@ -446,17 +467,7 @@
                 // }
 
                 $("#grid_after").attr("src", url);
-
-                $('#plot_after').load(url_after);
-
-
-                // $('#interactive_plot').load(url2);
-                // $('#interactive_plot2').load(url3);
-                // console.log('int plot after is', url_after, 'trying to set it');
-                // $('#ipafter').load(url_after);
-                // setTimeout(() => { document.getElementById("ipafter").innerHTML='<object type="text/html" data=url_after ></object>'; }, 5000);
-                
-                // $('#interactive_plot_after').load(url_after);
+                $("#interactive_plot2").load(url3);
             },
 			complete:function(data){
 			},

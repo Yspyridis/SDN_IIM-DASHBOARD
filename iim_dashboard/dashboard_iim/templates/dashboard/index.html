@@ -95,10 +95,10 @@
                                     <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="btn btn-primary">Select Islanding Method</button>
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
                                         <h6 tabindex="-1" class="dropdown-header">MLST</h6>
-                                        <button id="gap" type="button" tabindex="0" class="dropdown-item">Gap</button>
+                                        <!-- <button id="gap" type="button" tabindex="0" class="dropdown-item">Gap</button>
                                         <button id="min-cut" type="button" tabindex="0" class="dropdown-item">Min-cut</button>
-                                        <h6 tabindex="-1" class="dropdown-header">OTSC</h6>
-                                        <button id="otsc" type="button" tabindex="0" class="dropdown-item">Otsc</button>
+                                        <h6 tabindex="-1" class="dropdown-header">OTSC</h6> -->
+                                        <button id="otsc" type="button" tabindex="0" class="dropdown-item">OTSC IIM</button>
                                     </div>
                                 </div>
                             </div>
@@ -334,28 +334,28 @@
     });
 
 
-    $("#gap").on('click', async function(e) {
+    // $("#gap").on('click', async function(e) {
 
-        getIslandingPlot('GAP');
-        $(".dropdown-menu").removeClass('show');
+    //     getIslandingPlot('GAP');
+    //     $(".dropdown-menu").removeClass('show');
 
-        getNumericalResults('GAP');
-    });
+    //     getNumericalResults('GAP');
+    // });
 
-    $("#min-cut").on('click', async function(e) {
+    // $("#min-cut").on('click', async function(e) {
 
-        getIslandingPlot('MIN-CUT');
-        $(".dropdown-menu").removeClass('show');
+    //     getIslandingPlot('MIN-CUT');
+    //     $(".dropdown-menu").removeClass('show');
 
-        // getNumericalResults('MIN-CUT');
-    });
+    //     // getNumericalResults('MIN-CUT');
+    // });
     
     $("#otsc").on('click', async function(e) {
 
         getIslandingPlot('OTSC IIM');
         $(".dropdown-menu").removeClass('show');
 
-        // getNumericalResults('OTSC IIM');
+        getNumericalResults('OTSC IIM');
     });
 
     function getIslandingPlot(method) {

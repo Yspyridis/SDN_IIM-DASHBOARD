@@ -161,7 +161,7 @@ def euclidean_distances(x, all_vec):
 # def main():
     # net = data
 # model_name = 'gridmodel-alkyonis-2.json'
-model_name = 'UC3/model.json'
+model_name = 'uc4_gridmodel.json'
 
 net = pp.from_json(model_name)
 print(type(net))

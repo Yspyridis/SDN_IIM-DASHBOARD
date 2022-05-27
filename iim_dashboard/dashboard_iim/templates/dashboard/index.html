@@ -231,7 +231,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="center_right" style="width:90%; height:500px" id="interactive_plot2"></div>
+                                        <div class="center_right" style="width:90%; height:500px" id="plot_1"></div>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                    <div class="center_right" style="width:90%; height:500px" id="plot_before"></div>
+                                    <div class="center_right" style="width:90%; height:500px" id="plot_2"></div>
                                 </div>
                                 </div>
                             </div>
@@ -296,11 +296,11 @@
         $("#grid_initial_1").attr("src", "");
         $("#grid_initial_1").attr("src", "{% static 'grid_initial/grid.png' %}");
 
-        url_before = "{% static 'grid_initial/interactive-plot_before.html' %}";
-        url_after = "{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
+        url_1 = "{% static 'grid_initial/interactive-plot2_OTSC IIM.html' %}";
+        url_2 = "{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
 
-        $('#plot_before').load(url_before);
-        $('#plot_after').load(url_after);
+        $('#plot_1').load(url_1);
+        $('#plot_2').load(url_2);
 
         getIslandingPlot('OTSC IIM');
         getNumericalResults('OTSC IIM');
@@ -352,12 +352,12 @@
                     url = "{% static 'grid_after_islanding/grid_after_OTSC IIM.png' %}";
                     url2= "{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
                     url3= "{% static 'grid_after_islanding/interactive-plot2_OTSC IIM.html' %}";
-
                     url_after="{% static 'grid_after_islanding/interactive-plot_OTSC IIM.html' %}";
                 }
 
                 $("#grid_after").attr("src", url);
-                $("#interactive_plot2").load(url3);
+                $("#plot_1").load(url3);
+                $("#plot_2").load(url2);
             },
 			complete:function(data){
 			},
